@@ -87,7 +87,7 @@ def execute_schema_script():
         conn.commit()
         
         print("\n" + "=" * 70)
-        print("MIGRAÇÃO DE SCHEMA CONCLUÍDA COM SUCESSO! 🚀")
+        print("MIGRAÇÃO DE SCHEMA CONCLUÍDA COM SUCESSO! ")
         print(f"{executed} de {total_batches} blocos executados.")
         print("=" * 70 + "\n")
 
