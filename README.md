@@ -98,72 +98,15 @@ Dependendo da estratégia utilizada, diferentes ferramentas e métodos podem ser
 
 A escolha depende do tamanho do banco, dos objetos utilizados, do nível de compatibilidade e da necessidade de downtime.
 
-## E o SQLAlchemy?
-
-O **SQLAlchemy não é uma ferramenta de migração de bancos SQL Server para Azure SQL Database**.
-
-Ele é principalmente uma biblioteca Python utilizada para trabalhar com bancos de dados.
-
-Pode ser utilizado para:
-
-* criar conexões;
-* executar comandos SQL;
-* consultar dados;
-* inserir dados;
-* atualizar dados;
-* realizar processos de ETL;
-* transferir dados entre bancos;
-* integrar aplicações Python com bancos relacionais.
-
-Nesse cenário, o SQLAlchemy pode ajudar na transferência dos dados.
-
-Porém, isso não significa que ele esteja realizando uma migração completa do banco.
-
-Uma migração pode envolver muito mais do que tabelas e registros, incluindo schema, índices, constraints, views, procedures, funções, permissões e outros objetos.
-
-## SQLAlchemy não é obrigatório
-
-Não é necessário utilizar SQLAlchemy para migrar o AdventureWorksDW2022.
-
-Ele é apenas uma das possíveis ferramentas para trabalhar com os dados.
-
-Uma arquitetura baseada em Python poderia utilizar:
-
-```text
-Python
- │
- ├── pyodbc
- ├── SQLAlchemy
- ├── pandas
- └── azure-identity
-```
-
-Mas ferramentas e serviços específicos da Azure também podem ser utilizados para avaliação, migração e modernização de workloads SQL Server.
-
 ## Backup não é banco acessível
 
 Outro ponto importante é diferenciar o backup do banco de dados.
 
-O arquivo:
-
-```text
-AdventureWorksDW2022.bak
-```
-
-é um **backup**.
+O arquivo `AdventureWorksDW2022.bak` é um **backup**.
 
 Ele pode ser armazenado no Azure Blob Storage de forma independente da execução da Managed Instance.
 
-Porém:
-
-```text
-Blob Storage
-     │
-     ▼
-AdventureWorksDW2022.bak
-```
-
-não significa que o banco esteja disponível para consultas SQL.
+Porém, não significa que o banco esteja disponível para consultas SQL.
 
 Para executar:
 
@@ -174,57 +117,7 @@ FROM dbo.AlgumaTabela;
 
 é necessário que os dados estejam carregados em um mecanismo de banco capaz de executar SQL.
 
-Por isso, o Blob Storage funciona como armazenamento do backup, e não como substituto direto de um servidor SQL.
-
-## Arquitetura passada x arquitetura migrada
-
-### Arquitetura passada
-
-```text
-                   ┌──────────────────────┐
-                   │   Azure Blob Storage │
-                   │                      │
-                   │ AdventureWorksDW     │
-                   │       .bak           │
-                   └──────────┬───────────┘
-                              │
-                              │ RESTORE
-                              ▼
-                   ┌──────────────────────┐
-                   │ SQL Managed Instance │
-                   │                      │
-                   │ AdventureWorksDW2022 │
-                   └──────────┬───────────┘
-                              │
-                              ▼
-                    Python / Power BI /
-                       DBeaver / SQL
-```
-
-### Possível arquitetura após migração
-
-```text
-                   ┌──────────────────────┐
-                   │   Azure Blob Storage │
-                   │                      │
-                   │ AdventureWorksDW     │
-                   │       .bak           │
-                   └──────────┬───────────┘
-                              │
-                              │ Migração
-                              ▼
-                   ┌──────────────────────┐
-                   │  Azure SQL Database  │
-                   │                      │
-                   │ AdventureWorksDW2022 │
-                   └──────────┬───────────┘
-                              │
-                              ▼
-                    Python / Power BI /
-                       DBeaver / SQL
-```
-
-Nesse segundo cenário, o banco estaria hospedado em um serviço diferente da Managed Instance atual.
+> Por isso, o Blob Storage funciona como armazenamento do backup, e não como substituto direto de um servidor SQL.
 
 ## Por que considerar a migração?
 
@@ -256,46 +149,11 @@ Banco não acessível
 
 Uma eventual migração para outro serviço poderia permitir uma arquitetura diferente, dependendo das características de disponibilidade e custo desejadas.
 
-## Estratégia de economia
-
-A arquitetura atual foi inicialmente escolhida considerando economia de recursos.
-
-Manter uma infraestrutura SQL Server ativa continuamente pode não ser necessário para um projeto de estudo.
-
-O backup permanece no Blob Storage.
-
-Dessa forma, o `.bak` continua armazenado mesmo quando a infraestrutura SQL não está sendo utilizada.
-
-A vantagem é separar:
-
-```text
-Armazenamento
-     │
-     ▼
-Blob Storage
-     │
-     └── Backup persistente
-
-Execução
-     │
-     ▼
-SQL Managed Instance
-     │
-     └── Banco disponível quando ativa
-```
-
 ## Trade-off entre economia e disponibilidade
 
 A decisão depende do objetivo do projeto.
 
 ### Manter apenas o backup
-
-```text
-Blob Storage
-     │
-     ▼
-.bak
-```
 
 **Vantagens:**
 
@@ -311,13 +169,6 @@ Blob Storage
 
 ### Manter o banco na Managed Instance
 
-```text
-Managed Instance
-       │
-       ▼
-AdventureWorksDW2022
-```
-
 **Vantagens:**
 
 * compatibilidade elevada com SQL Server;
@@ -330,13 +181,6 @@ AdventureWorksDW2022
 * manter infraestrutura ativa continuamente pode aumentar custos.
 
 ### Migrar para Azure SQL Database
-
-```text
-Azure SQL Database
-       │
-       ▼
-AdventureWorksDW2022
-```
 
 **Vantagens potenciais:**
 
@@ -368,10 +212,6 @@ O objetivo não é substituir imediatamente a arquitetura atual, mas avaliar:
 8. Custo da nova arquitetura.
 9. Benefícios de manter o banco disponível independentemente da Managed Instance.
 
-## Possível fluxo de migração
-
-A estratégia definitiva deve ser definida após verificar os objetos e funcionalidades utilizados pelo banco.
-
 ## Conclusão
 
 O AdventureWorksDW2022 não pode ser tratado simplesmente como um conjunto de arquivos `.mdf`, `.ndf` e `.ldf` que podem ser copiados diretamente para o Azure SQL Database.
@@ -384,15 +224,13 @@ A SQL Managed Instance permanece como o ambiente atual para restauração e exec
 
 A migração para Azure SQL Database representa uma possível evolução arquitetural para um cenário em que seja desejável utilizar o banco fora da Managed Instance atual.
 
-O SQLAlchemy pode ser utilizado como ferramenta de acesso e transferência de dados através de Python, mas **não é obrigatório nem representa, sozinho, uma solução completa de migração**.
-
 Assim, esta branch documenta a evolução do projeto de uma abordagem baseada em:
 
 ```text
 Backup → Blob Storage → SQL Managed Instance
 ```
 
-para a avaliação de uma possível arquitetura:
+para a avaliação de uma nova arquitetura:
 
 ```text
 Backup → Blob Storage
@@ -410,9 +248,9 @@ Backup → Blob Storage
 A decisão final deve considerar principalmente **compatibilidade, disponibilidade, complexidade operacional e custo**.
 
 
-3.inventory.py — Inventário do banco
+## Inventário do banco:
 
-O arquivo 3.inventory.py foi desenvolvido para realizar um inventário estrutural do banco AdventureWorksDW2022 hospedado atualmente na Azure SQL Managed Instance. O script utiliza a conexão existente do projeto para coletar informações necessárias antes da migração para o Azure SQL Database.
+O arquivo `3.inventory.py` foi desenvolvido para realizar um inventário estrutural do banco AdventureWorksDW2022 hospedado atualmente na Azure SQL Managed Instance. O script utiliza a conexão existente do projeto para coletar informações necessárias antes da migração para o Azure SQL Database.
 
 O inventário identifica as tabelas, colunas, tipos de dados, tamanhos, precisão, escala, possibilidade de valores nulos, valores padrão e campos IDENTITY, além de contabilizar a quantidade de registros de cada tabela.
 
@@ -426,14 +264,16 @@ O inventário foi definido como uma etapa anterior à migração para garantir q
 
 A estratégia de migração foi dividida nas seguintes fases:
 
-### ✅ 1. Fase de Inventário (`inventory.json`)
+### 1. Fase de Inventário (`inventory.json`)
 - Extração de todos os metadados do banco de dados de origem (AdventureWorksDW2022).
 - Mapeamento de 31 tabelas e mais de 1 milhão de registros previstos.
 - Coleta de metadados brutos (colunas, tipos de dados, chaves primárias, estrangeiras e índices).
 
-### ✅ 2. Fase de Planejamento (`migration_plan.py`)
-Script inteligente que consome o inventário e constrói um **Plano de Migração** definitivo (`migration_plan.json`). 
+### 2. Fase de Planejamento (`migration_plan.py`)
+Script que consome o inventário e constrói um **Plano de Migração** definitivo (`migration_plan.json`). 
+
 **Principais recursos:**
+
 - **Tradução de Tipos (Azure SQL Dialect):** Conversão de tipos incompatíveis ou legados (ex: `int(10,0)`) para a sintaxe rigorosa aceita pelo Azure SQL (`INT`, `NVARCHAR(MAX)`, etc).
 - **Extração e Estruturação:** Separação limpa de Schemas, Tabelas, Primary Keys (PKs), Foreign Keys (FKs) e Índices.
 - **Estratégia de Execução Segura:** Define uma ordem lógica para evitar erros de dependência:
@@ -445,15 +285,19 @@ Script inteligente que consome o inventário e constrói um **Plano de Migraçã
   6. Criação de Foreign Keys
   7. Validação de Migração
 
-  ### ✅ 3. Fase de Geração de Schema DDL (`migration_schema.py`)
+  ### 3. Fase de Geração de Schema DDL (`migration_schema.py`)
+
 Script em Python puro (sem uso de ORMs como SQLAlchemy) que lê o plano de migração gerado e constrói o código SQL exato para a infraestrutura no Azure.
+
 **Saída Gerada:** Arquivo `01_create_schema_and_tables.sql`
+
 **Principais recursos:**
+
 - **Geração de Raw SQL Otimizado:** Escreve a sintaxe nativa do Azure SQL Database, aplicando os tipos de dados traduzidos, restrições de nulidade (`NULL`/`NOT NULL`) e auto-incremento (`IDENTITY`).
 - **Idempotência (Segurança):** Todos os blocos DDL utilizam verificações `IF NOT EXISTS`, garantindo que o script possa ser rodado múltiplas vezes sem causar erros de "objeto já existente".
 - **Omissão Proposital de Chaves:** Cria **apenas** Schemas e Tabelas. Primary Keys, Foreign Keys e Índices são intencionalmente ignorados nesta fase para evitar gargalos de performance e erros de restrição de integridade durante a futura carga de dados (Phase Load).
 
-### 📄 Sobre o script gerado: `01_create_schema_and_tables.sql`
+### Sobre o script gerado: `01_create_schema_and_tables.sql`
 Este arquivo é o script DDL (Data Definition Language) bruto gerado automaticamente pelo Python. Ele atua como o "alicerce" do banco de dados no Azure e possui três características fundamentais:
 
 - **Idempotência (Execução Segura):** Todo comando de criação utiliza a cláusula `IF NOT EXISTS`. Isso significa que o script pode ser executado múltiplas vezes sem gerar erros de "objeto já existente" e sem apagar dados acidentalmente.
@@ -461,7 +305,7 @@ Este arquivo é o script DDL (Data Definition Language) bruto gerado automaticam
 - **Foco em Performance de Carga:** Chaves Primárias (PKs), Chaves Estrangeiras (FKs) e Índices **não** estão neste arquivo. Eles são intencionalmente deixados para o final do projeto. Criar a "carcaça" vazia garante que a futura inserção de milhões de linhas seja extremamente rápida e livre de erros de dependência.
 
 
-### 🚀 4. Fase de Deploy de Infraestrutura (`deploy_schema.py`)
+### 4. Fase de Deploy de Infraestrutura (`deploy_schema.py`)
 Este script é a ponte entre o seu projeto local e a nuvem. Ele é responsável por pegar o SQL gerado na etapa anterior e materializá-lo de fato no Azure.
 
 **O que este script faz:**
@@ -470,6 +314,29 @@ Este script é a ponte entre o seu projeto local e a nuvem. Ele é responsável 
 - **Execução e Transação (Commit/Rollback):** Envia os comandos DDL para o Azure um a um. Se tudo der certo, ele salva as alterações (*commit*). Se algum bloco falhar, ele desfaz a operação de segurança (*rollback*) e exibe o detalhe do erro.
 - **Resultado:** Ao final da execução, o seu banco de dados no Azure estará com toda a "carcaça" pronta: os *Schemas* e *Tabelas* estarão criados, estruturados corretamente, mas ainda vazios, aguardando a fase de extração e carga de dados.
 
+### 5. O script `load_data.py`
+
+O script **`load_data.py`** é o motor responsável por extrair os dados da sua origem (Managed Instance) e inseri-los de forma segura, otimizada e monitorada no destino (Azure SQL Database).
+
+## Como Funciona o Script
+
+### 1. Leitura do Plano de Migração
+* **O que faz:** Lê o arquivo `migration_plan.json` gerado anteriormente para descobrir exatamente quais tabelas precisam ser migradas, evitando que você precise digitar o nome de cada uma manualmente.
+
+### 2. Conexão Segura com os Bancos
+* **O que faz:** Utiliza o driver **ODBC Driver 18 for SQL Server** junto com as credenciais salvas no seu arquivo `.env` para abrir conexões seguras (`Encrypt=yes`) tanto para a origem quanto para o Azure.
+
+### 3. Limpeza Preventiva de Dados
+* **O que faz:** Antes de inserir os dados de uma tabela, o script tenta executar um `TRUNCATE` (ou `DELETE`) no destino. Isso garante que, se você precisar cancelar e reiniciar o processo, ele limpa os registros parciais e **evita erros de chave duplicada**.
+
+### 4. Controle de Identidade (`IDENTITY_INSERT`)
+* **O que faz:** Como tabelas com colunas autoincremento possuem restrições de identidade, o script ativa o comando `SET IDENTITY_INSERT ON` temporariamente para permitir que os IDs originais antigos sejam preservados no Azure.
+
+### 5. Lotes Otimizados e Barra de Progresso
+* **O que faz:** 
+  * Divide os dados em blocos de **5.000 linhas** para economizar memória e garantir estabilidade de rede.
+  * Ativa a flag `fast_executemany = True` do PyODBC para alcançar a **velocidade máxima de inserção**.
+  * Utiliza a biblioteca `tqdm` para exibir uma barra de carregamento interativa no terminal, mostrando o progresso em tempo real.
 
 ## ☁️ Arquitetura de Nuvem: Azure SQL Database vs. Managed Instance
 
@@ -506,6 +373,7 @@ project_adventureworksDW2022/
 │   ├── migration_plan.json  # Plano estruturado e mapeado de tipos de dados
 │   ├── migration_plan.py    # Conversor/Planejador de migração inteligente
 │   └── migration_schema.py  # Gerador de código DDL em Raw SQL (sem ORM)
+│   └── load_data.py         # Extrair os dados de origem
 │
 ├── restore_database/        # Módulo de manipulação e auditoria na Managed Instance
 │   ├── 1.restore_bak.py     # Automação de restore do .bak via Blob Storage
@@ -518,8 +386,9 @@ project_adventureworksDW2022/
 ├── .gitignore               # Arquivos ignorados pelo controle de versão
 ├── environment.yml          # Dependências e ambiente conda do projeto
 └── README.md                # Documentação oficial da arquitetura e projeto
+```
 
-### 🔍 Análise Detalhada dos Requisitos
+### Análise dos Requisitos:
 
 #### 1. Requisitos e Compatibilidade
 * **Azure SQL Database:** Perfeito para o projeto, pois o escopo se concentra na estruturação de um modelo relacional analítico (Data Warehouse) e ingestão via scripts Python. Ele oferece suporte a quase 100% dos recursos transacionais e analíticos do SQL Server sem a necessidade de gerenciar uma instância inteira.
@@ -535,14 +404,49 @@ project_adventureworksDW2022/
 
 ---
 
-### 🚀 Veredito da Arquitetura
+### Veredito da Arquitetura:
 A adoção do **Azure SQL Database** garantiu:
 1. **Agilidade no Deploy:** Provisionamento e ajustes de schema automatizados via scripts Python/DDL.
 2. **Manutenção Zero:** Foco absoluto na engenharia de dados e modelagem, delegando a aplicação de patches e atualizações de infraestrutura para a Microsoft.
 3. **Integração Nativa com Power BI:** Conectividade otimizada e nativa para a camada de visualização de dados sem barreiras de rede complexas.
 
 
-A evolução arquitetural documentada nesta branch demonstra que a transição de um ambiente pesado de SQL Managed Instance para um serviço enxuto e escalável como o Azure SQL Database traz ganhos expressivos em termos de agilidade de desenvolvimento, automação via código Python e otimização financeira significativa (especialmente através do modelo Serverless e do controle de infraestrutura ociosa).
+# Atenção: Migração para Azure e o Azure Database Migration Service (DMS)
 
-Com a infraestrutura de banco de dados modelada, deployada e validada com sucesso, o projeto encerra sua fase de engenharia de dados e está pronto para avançar para a camada analítica e de visualização utilizando o Power BI.
+## 1. O que é o Azure Database Migration Service (DMS)?
+O Azure DMS é um serviço totalmente gerenciado, projetado para permitir migrações perfeitas de várias fontes de banco de dados para as plataformas de dados do Azure com tempo de inatividade mínimo.
+
+## 2. Custos do DMS: É caro?
+A resposta curta é: **não, ele não é caro**, e para a maioria dos cenários de migração, ele é **totalmente gratuito**.
+
+### Níveis de Serviço e Precificação:
+
+*   **Nível Standard (Gratuito):**
+    *   **Finalidade:** Ideal para migrações "offline".
+    *   **Cenário:** Quando você pode permitir uma janela de manutenção onde a aplicação para, permitindo a cópia dos dados.
+    *   **Custo:** **$0 (Gratuito)**. É a opção ideal para a maioria dos projetos de pequeno e médio porte.
+
+*   **Nível Premium (Tempo de Indisponibilidade Mínimo):**
+    *   **Finalidade:** Ideal para bancos de dados críticos que exigem migração "online" com sincronização contínua.
+    *   **Custo:** **Gratuito pelos primeiros 183 dias** (aprox. 6 meses).
+    *   **Após o período:** Cobrado por vCore por hora. Na prática, como a maioria das migrações é concluída muito antes desse prazo, o custo da ferramenta acaba sendo zero para a maioria das empresas.
+
+## 3. Onde está o custo real da migração?
+Embora a ferramenta DMS seja gratuita, você deve considerar os custos operacionais do projeto:
+
+1.  **Destino (Azure SQL Database):** Este é o seu custo fixo mensal. O preço depende do nível de performance (vCores ou DTUs) e do armazenamento (GB) que você selecionar.
+2.  **Armazenamento e Transferência de Dados:** Podem existir custos de armazenamento de backups ou tráfego de dados, dependendo do volume.
+3.  **Mão de Obra e Consultoria:** O maior investimento em projetos de migração geralmente é o tempo da equipe técnica para preparar o ambiente, garantir a compatibilidade e validar a integridade dos dados pós-migração.
+
+## 4. Conclusão
+A abordagem manual (via script Python) é extremamente econômica, não pago por ferramentas extras. Migrar usando o DMS oficial é uma excelente escolha para automatizar processos, e como a ferramenta é gratuita (ou tem um período de tolerância muito longo), **o custo da ferramenta DMS não deve ser uma barreira para o seu projeto**.
+
+---
+*Referência: [Visão geral do Azure Database Migration Service](https://learn.microsoft.com/pt-br/azure/dms/dms-overview)*
+
+---
+
+*A evolução arquitetural documentada nesta branch demonstra que a transição de um ambiente pesado de SQL Managed Instance para um serviço enxuto e escalável como o Azure SQL Database traz ganhos expressivos em termos de agilidade de desenvolvimento, automação via código Python e otimização financeira significativa (especialmente através do modelo Serverless e do controle de infraestrutura ociosa).*
+
+*Com a infraestrutura de banco de dados modelada, deployada e validada com sucesso, o projeto encerra sua fase de infraestrutura de dados e está pronto para avançar para a camada analítica e de visualização utilizando o Power BI.*
 
