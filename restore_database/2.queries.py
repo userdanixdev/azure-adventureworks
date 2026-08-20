@@ -1,9 +1,6 @@
 from connection import get_connection
 
-
 # Consulta: listar tabelas
-
-
 def listar_tabelas():
 
     connection = get_connection()

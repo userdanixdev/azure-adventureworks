@@ -21,19 +21,12 @@ import json
 from pathlib import Path
 from datetime import datetime
 
-# ============================================================
-# CONFIGURAÇÃO
-# ============================================================
-
 BASE_DIR = Path(__file__).resolve().parent
 
 INVENTORY_FILE = BASE_DIR.parent / "inventory" / "adventureworks_inventory.json"
 PLAN_FILE = BASE_DIR / "migration_plan.json"
 
-# ============================================================
-# LEITURA DO INVENTÁRIO
-# ============================================================
-
+# LEITURA DO INVENTÁRIO: Abre e lê o arquivo 'inventory.json'
 def load_inventory():
     """Carrega o inventory.json."""
     if not INVENTORY_FILE.exists():
@@ -44,10 +37,7 @@ def load_inventory():
     with open(INVENTORY_FILE, "r", encoding="utf-8") as file:
         return json.load(file)
 
-# ============================================================
 # TRADUÇÃO DE TIPOS (AZURE SQL)
-# ============================================================
-
 def get_azure_sql_type(col_data):
     """
     Traduz os metadados do inventário para a sintaxe DDL correta do Azure SQL Database.
@@ -72,10 +62,8 @@ def get_azure_sql_type(col_data):
             
     return base_type
 
-# ============================================================
-# NORMALIZAÇÃO
-# ============================================================
-
+# NORMALIZAÇÃO: Função auxiliar que busca listas dentro do inventário usando diferentes nomes
+# de chaves possíveis. Garantindo maior compatibilidade caso a estrutura do arquivo Json mude.
 def get_list(data, *keys):
     """
     Procura uma lista em diferentes possíveis estruturas do inventory.json.
@@ -87,10 +75,7 @@ def get_list(data, *keys):
             current = current.get(key)
     return current if isinstance(current, list) else []
 
-# ============================================================
 # EXTRAÇÃO DE TABELAS E COLUNAS
-# ============================================================
-
 def build_tables(inventory):
     """
     Extrai as tabelas do inventário e organiza as informações
@@ -105,20 +90,18 @@ def build_tables(inventory):
     for table in raw_tables:
         if not isinstance(table, dict):
             continue
-
         schema_name = table.get("schema") or table.get("schema_name", "dbo")
-        table_name = table.get("table") or table.get("name") # Ajustado para pegar "name" caso "table" falhe
-
+        table_name = table.get("table") or table.get("name") 
+        # Ajustado para pegar "name" caso "table" falhe
         if not table_name:
             continue
-
         raw_columns = table.get("columns", [])
         if not isinstance(raw_columns, list):
             raw_columns = []
-            
+         
         processed_columns = []
         for col in raw_columns:
-            # Preserva todos os atributos originais da coluna, mas injeta o tipo corrigido pro Azure
+# Preserva todos os atributos originais da coluna, mas injeta o tipo corrigido pro Azure
             new_col = dict(col)
             new_col["azure_sql_type"] = get_azure_sql_type(col)
             new_col["is_nullable"] = col.get("nullable", True)
@@ -137,10 +120,7 @@ def build_tables(inventory):
 
     return tables
 
-# ============================================================
 # EXTRAÇÃO DE PRIMARY KEYS
-# ============================================================
-
 def build_primary_keys(inventory):
     possible_keys = ["primary_keys", "primaryKeys", "pks"]
     for key in possible_keys:
@@ -149,10 +129,7 @@ def build_primary_keys(inventory):
             return value
     return []
 
-# ============================================================
 # EXTRAÇÃO DE FOREIGN KEYS
-# ============================================================
-
 def build_foreign_keys(inventory):
     possible_keys = ["foreign_keys", "foreignKeys", "fks"]
     for key in possible_keys:
@@ -161,10 +138,7 @@ def build_foreign_keys(inventory):
             return value
     return []
 
-# ============================================================
 # EXTRAÇÃO DE ÍNDICES
-# ============================================================
-
 def build_indexes(inventory):
     possible_keys = ["indexes", "indices"]
     for key in possible_keys:
@@ -173,20 +147,14 @@ def build_indexes(inventory):
             return value
     return []
 
-# ============================================================
 # ORDENAÇÃO DAS TABELAS
-# ============================================================
-
 def sort_tables(tables):
     return sorted(
         tables,
         key=lambda x: (x.get("schema", ""), x.get("table", ""))
     )
 
-# ============================================================
 # GERAÇÃO DO PLANO
-# ============================================================
-
 def build_migration_plan(inventory):
     tables = sort_tables(build_tables(inventory))
     primary_keys = build_primary_keys(inventory)
@@ -230,10 +198,7 @@ def build_migration_plan(inventory):
 
     return plan
 
-# ============================================================
 # SALVAR PLANO E TERMINAL
-# ============================================================
-
 def save_plan(plan):
     with open(PLAN_FILE, "w", encoding="utf-8") as file:
         json.dump(
@@ -280,9 +245,7 @@ def print_summary(plan):
     print(f"Plano salvo em: {PLAN_FILE}")
     print("=" * 70 + "\n")
 
-# ============================================================
 # MAIN
-# ============================================================
 
 def main():
     try:

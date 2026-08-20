@@ -88,16 +88,6 @@ Existem diferenças de arquitetura, recursos, permissões e funcionalidades disp
 
 Por esse motivo, antes de migrar um banco SQL Server para Azure SQL Database, é necessário verificar a compatibilidade do workload.
 
-## O que significa migrar?
-
-Migrar não significa simplesmente transportar os arquivos físicos do banco.
-
-A migração envolve transferir e adaptar os componentes necessários para o ambiente de destino.
-
-Dependendo da estratégia utilizada, diferentes ferramentas e métodos podem ser empregados.
-
-A escolha depende do tamanho do banco, dos objetos utilizados, do nível de compatibilidade e da necessidade de downtime.
-
 ## Backup não é banco acessível
 
 Outro ponto importante é diferenciar o backup do banco de dados.
