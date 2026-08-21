@@ -82,25 +82,6 @@ Existem diferenças de arquitetura, recursos, permissões e funcionalidades disp
 
 Por esse motivo, antes de migrar um banco SQL Server para Azure SQL Database, é necessário verificar a compatibilidade do workload.
 
-## Backup não é banco acessível
-
-Outro ponto importante é diferenciar o backup do banco de dados.
-
-O arquivo `AdventureWorksDW2022.bak` é um **backup**.
-
-Ele pode ser armazenado no Azure Blob Storage de forma independente da execução da Managed Instance.
-
-Porém, não significa que o banco esteja disponível para consultas SQL.
-
-Para executar:
-
-```sql
-SELECT *
-FROM dbo.AlgumaTabela;
-```
-
-é necessário que os dados estejam carregados em um mecanismo de banco capaz de executar SQL.
-
 > Por isso, o Blob Storage funciona como armazenamento do backup, e não como substituto direto de um servidor SQL.
 
 ## Por que considerar a migração?
