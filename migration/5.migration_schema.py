@@ -1,34 +1,24 @@
-"""
-migration_schema.py
-
-Lê o migration_plan.json e gera o script DDL (SQL) para criar 
-os schemas e as tabelas no Azure SQL Database.
-
-Entrada:
-    migration_plan.json
-
-Saída:
-    01_create_schema_and_tables.sql
-"""
+# Esse Script lê o migration_plan.json e gera o script DDL (SQL) para criar 
+# os schemas e as tabelas no Azure SQL Database.
+# Entrada:     migration_plan.json
+# Saída:     01_create_schema_and_tables.sql
 
 import json
 from pathlib import Path
 from datetime import datetime
 
-# ============================================================
-# CONFIGURAÇÃO
-# ============================================================
+
+# CONFIGURAÇÃO de Criação de caminhos
 
 BASE_DIR = Path(__file__).resolve().parent
 PLAN_FILE = BASE_DIR / "migration_plan.json"
 OUTPUT_SQL = BASE_DIR / "01_create_schema_and_tables.sql"
 
-# ============================================================
-# LEITURA DO PLANO
-# ============================================================
+# Carrega o plano de migração gerado no passo anterior.
+# Se o arquivo não for encontrado na pasta esperada,
+# ela dispara um erro informando que o plano precisa ser gerado primeiro.
 
 def load_plan():
-    """Carrega o plano de migração gerado no passo anterior."""
     if not PLAN_FILE.exists():
         raise FileNotFoundError(
             f"Arquivo de plano não encontrado: {PLAN_FILE}. "
@@ -38,12 +28,14 @@ def load_plan():
     with open(PLAN_FILE, "r", encoding="utf-8") as file:
         return json.load(file)
 
-# ============================================================
 # GERAÇÃO DDL - SCHEMAS
-# ============================================================
+# Gera o código SQL (DDL) necessário para criar os schemas no banco de destino.
+# Ela ignora automaticamente o schema padrão dbo (pois ele já vem criado por padrão no SQL Server/Azure) 
+# e cria os demais schemas verificando se eles já existem (IF NOT EXISTS),
+#  garantindo que o script seja seguro para reexecuções.
 
 def build_schemas_ddl(schemas):
-    """Gera o SQL para criação de Schemas usando multi-line strings."""
+  
     sql_blocks = [
         "-- ==========================================\n"
         "-- FASE 1: CRIAÇÃO DE SCHEMAS\n"
@@ -54,7 +46,7 @@ def build_schemas_ddl(schemas):
         if schema.lower() == 'dbo':
             continue
             
-        # Template DDL para o Schema
+        # Template DDL para o Schema: Controle de Fluxo e estrutura do T-SQL
         schema_sql = f"""-- Schema: {schema}
 IF NOT EXISTS (SELECT 1 FROM sys.schemas WHERE name = '{schema}')
 BEGIN
@@ -66,9 +58,7 @@ GO
 
     return "\n".join(sql_blocks)
 
-# ============================================================
 # GERAÇÃO DDL - TABELAS
-# ============================================================
 
 def build_tables_ddl(tables):
     """Gera o SQL para criação de Tabelas usando multi-line strings."""
@@ -109,9 +99,7 @@ GO
 
     return "\n".join(sql_blocks)
 
-# ============================================================
 # MAIN
-# ============================================================
 
 def main():
     try:

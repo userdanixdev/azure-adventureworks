@@ -42,8 +42,6 @@ AdventureWorksDW2022.ldf
 
 Esses arquivos fazem parte da implementação física do SQL Server.
 
-Em um SQL Server tradicional, dependendo do ambiente, é possível realizar operações como `ATTACH` e `DETACH` utilizando os arquivos físicos do banco.
-
 Entretanto, o **Azure SQL Database** funciona como um serviço PaaS gerenciado.
 
 Nesse modelo, o usuário não possui acesso direto ao sistema operacional e ao armazenamento físico da infraestrutura para simplesmente copiar um `.mdf`, `.ndf` ou `.ldf` para dentro do serviço.
@@ -62,8 +60,6 @@ SQL Server
     └── Não podem simplesmente ser copiados
         para o Azure SQL Database
 ```
-
-É necessário utilizar um processo de migração compatível com o serviço de destino.
 
 ## Por que o fato de ser SQL Server é importante?
 
@@ -111,80 +107,86 @@ FROM dbo.AlgumaTabela;
 
 ## Por que considerar a migração?
 
-A principal motivação desta branch é avaliar uma arquitetura em que o banco possa permanecer disponível sem depender diretamente da Managed Instance utilizada para a restauração.
+A decisão de migrar geralmente envolve sair de um cenário de alto custo, engessamento ou manutenção pesada para um ambiente moderno e eficiente. Aqui estão os principais motivos para considerar a migração:
 
-Atualmente:
+1. Redução Drástica de Custos:
+- Fim da manutenção de hardware: Em ambientes locais (on-premises), você gasta com servidores físicos, energia, refrigeração, licenças caras de sistema operacional e equipe para cuidar do hardware. Na nuvem, tudo isso desaparece.
 
-```text
-Managed Instance ativa
-        │
-        ▼
-AdventureWorksDW2022
-        │
-        ▼
-Banco acessível
-```
+- Modelos flexíveis de pagamento: No Azure SQL Database, você paga apenas pelo que usa. Se o seu banco fica ocioso à noite ou nos fins de semana, você pode usar opções como o modelo Serverless, que pausa a computação automaticamente e reduz drasticamente a fatura.
 
-Quando a Managed Instance está desativada:
+- O Azure SQL Database possui opções de entrada mais econômicas, além de modelos de cobrança como o Serverless (onde o banco "dorme" ou reduz o custo ao mínimo quando não está sendo usado).
 
-```text
-Managed Instance desativada
-        │
-        ▼
-AdventureWorksDW2022
-        │
-        ▼
-Banco não acessível
-```
+- O Managed Instance exige uma estrutura de instância dedicada (vCores fixos e infraestrutura de rede mais complexas), o que torna o custo mensal base consideravelmente mais alto, ideal apenas para grandes empresas que precisam migrar sistemas legados complexos sem alterar códigos.
 
-Uma eventual migração para outro serviço poderia permitir uma arquitetura diferente, dependendo das características de disponibilidade e custo desejadas.
+2. Escalabilidade Instantânea
+- Em um servidor físico ou instância rígida, se o seu volume de dados crescer ou se o Power BI exigir muito processamento, você precisará comprar um servidor novo (o que leva semanas e é caro).
 
-## Trade-off entre economia e disponibilidade
+- Na nuvem, você muda a capacidade (vCores ou armazenamento) com um clique ou via script, dimensionando os recursos para cima ou para baixo conforme a demanda do seu negócio em tempo real.
 
-A decisão depende do objetivo do projeto.
+3. Eliminação da Manutenção de Infraestrutura (PaaS)
+Com o Banco de Dados como Serviço (PaaS), você não precisa se preocupar com:
+- Instalação de atualizações de segurança do sistema operacional.
+- Patches de correção do SQL Server.
+- Configuração manual de instâncias de alta disponibilidade e espelhamento.
 
-### Manter apenas o backup
+A própria Microsoft gerencia a infraestrutura básica, garantindo atualizações automáticas e alta disponibilidade nativa, permitindo que a sua equipe foque apenas nos dados e nas regras de negócio.
 
-**Vantagens:**
+4. Segurança e Conformidade Avançadas:
 
-* armazenamento persistente;
-* baixo custo relativo;
-* backup independente da execução do SQL Server;
-* possibilidade de restauração futura.
+O Azure oferece camadas de segurança de nível corporativo prontas para uso, como criptografia de dados em repouso e em trânsito por padrão, mascaramento de dados confidenciais, detecção de ameaças orientada por inteligência artificial e conformidade com normas globais (LGPD, ISO, SOC, etc.). Implementar isso do zero em um ambiente local exige um esforço técnico e financeiro gigantesco.
 
-**Desvantagem:**
+5. Facilidade de Integração com o ecossistema de Dados e IA:
 
-* não permite consultas SQL diretamente;
-* é necessário um ambiente SQL para restaurar o banco.
+Migrar para o Azure coloca o seu banco de dados no centro de um ecossistema moderno. Fica extremamente simples conectar seus dados a ferramentas de nuvem como Azure Data Factory, Power BI Service, Azure Synapse, ferramentas de Inteligência Artificial e Machine Learning, criando um fluxo de dados rápido e sem fricções de rede.
 
-### Manter o banco na Managed Instance
+6. Escalabilidade Elástica para Picos de Carga do Power BI:
 
-**Vantagens:**
+Quando o Power BI atualiza um conjunto de dados pesado (DirectQuery ou importações massivas), ele dispara muitas consultas simultâneas que consomem bastante CPU e memória do banco.
 
-* compatibilidade elevada com SQL Server;
-* banco pronto para consultas quando a instância está ativa;
-* adequado para estudos de SQL Server.
+O Azure SQL Database permite usar Elastic Pools (Pools Elásticos) ou redimensionar recursos computacionais de forma instantânea (subir ou descer vCores com poucos cliques ou via código) para absorver essa carga sem pagar o preço de uma instância dedicada o tempo todo.
 
-**Desvantagem:**
+## Análise de custos:
 
-* depende da disponibilidade da Managed Instance;
-* manter infraestrutura ativa continuamente pode aumentar custos.
+Para montar seu trabalho considerando uma simulação de 3 dias (72 horas) de processamento ou uso contínuo, vamos usar a base de cálculo real de preços públicos do Azure (região East US, Camada General Purpose, modelo de vCore provisionado sem descontos de licença prévia).
 
-### Migrar para Azure SQL Database
+### Cenário de Comparação:
 
-**Vantagens potenciais:**
+- Recurso: 4 vCores e armazenamento padrão de 250 GB.
+- Período da Simulação: 3 Dias (72 horas contínuas).
 
-* serviço PaaS;
-* gerenciamento de infraestrutura abstraído;
-* possibilidade de utilizar o banco independentemente da Managed Instance atual;
-* integração com ferramentas de dados e BI.
+### Opção 1: Azure SQL Database (vCore - General Purpose)
 
-**Desvantagens:**
+O Azure SQL Database cobra separadamente a computação por hora e o armazenamento por mês (proporcionalizado por dia).
 
-* necessidade de realizar a migração;
-* necessidade de avaliar compatibilidade;
-* possíveis alterações em objetos e funcionalidades;
-* custo deve ser analisado de acordo com o nível de serviço escolhido.
+- Custo de Computação (4 vCores):
+Taxa por hora aprox.: ~$1.01 USD por hora.
+
+- Para 72 horas: $1.01 \times 72 = \mathbf{\$72.72 \text{ USD}}$
+- Custo de Armazenamento (250 GB por 3 dias): Taxa mensal aprox. do armazenamento LRS: ~$0.115 por GB/mês.
+
+- Custo total de armazenamento no mês: $250 \times 0.115 = \$28.75$. Proporcional a 3 dias ($3/30$ avos): $\mathbf{\$2.88 \text{ USD}}$
+Total Estimado para 3 dias (Azure SQL Database): $\mathbf{\$75.60 \text{ USD}}$
+
+### Opção 2: Azure SQL Managed Instance (General Purpose)
+
+A Instância Gerenciada possui um custo base de infraestrutura e licenciamento mais elevado porque entrega uma instância isolada com rede virtual dedicada, cobrando um mínimo de armazenamento base incluído. 
+
+- Custo de Computação e Instância (4 vCores):
+O custo horário para uma Managed Instance de 4 vCores gira em torno de ~$1.47 USD por hora (incluindo licença base e infraestrutura de rede gerenciada).
+
+- Para 72 horas: $1.47 \times 72 = \mathbf{\$105.84 \text{ USD}}$ (Nota: dependendo da série de hardware e região, instâncias menores de MI podem cobrar taxas fixas mensais rateadas).
+
+- Custo de Armazenamento (32 GB a 250 GB inclusos na base):Proporcional a 3 dias de infraestrutura de dados alocada: aprox. $\mathbf{\$15.00 \text{ USD}}$.
+
+- Total Estimado para 3 dias (Managed Instance): $\mathbf{\$120.84 \text{ USD}}$ (podendo ser consideravelmente maior dependendo da complexidade da VNet e dos custos ocultos de backup de instância).
+
+
+| Componente de Análise | Azure SQL Database | Azure SQL Managed Instance |
+| :--- | :--- | :--- |
+| **Custo de Computação (72h)** | ~$72.72 | ~$105.84 |
+| **Custo de Armazenamento (Proporcional)** | ~$2.88 | ~$15.00 |
+| **Custo Total do Projeto (3 Dias)** | **~$75.60 USD** | **~$120.84 USD** |
+| **Diferença Percentual** | Referência base (Mais econômico) | **~60% mais caro** para o mesmo período |
 
 ## O objetivo desta branch
 
@@ -214,29 +216,7 @@ A SQL Managed Instance permanece como o ambiente atual para restauração e exec
 
 A migração para Azure SQL Database representa uma possível evolução arquitetural para um cenário em que seja desejável utilizar o banco fora da Managed Instance atual.
 
-Assim, esta branch documenta a evolução do projeto de uma abordagem baseada em:
-
-```text
-Backup → Blob Storage → SQL Managed Instance
-```
-
-para a avaliação de uma nova arquitetura:
-
-```text
-Backup → Blob Storage
-             │
-             ▼
-      Processo de migração
-             │
-             ▼
-     Azure SQL Database
-             │
-             ▼
-      Python / Power BI
-```
-
 A decisão final deve considerar principalmente **compatibilidade, disponibilidade, complexidade operacional e custo**.
-
 
 ## Inventário do banco:
 
@@ -275,7 +255,7 @@ Script que consome o inventário e constrói um **Plano de Migração** definiti
   6. Criação de Foreign Keys
   7. Validação de Migração
 
-  ### 3. Fase de Geração de Schema DDL (`migration_schema.py`)
+### 3. Fase de Geração de Schema DDL (`migration_schema.py`)
 
 Script em Python puro (sem uso de ORMs como SQLAlchemy) que lê o plano de migração gerado e constrói o código SQL exato para a infraestrutura no Azure.
 
@@ -328,23 +308,6 @@ O script **`load_data.py`** é o motor responsável por extrair os dados da sua 
   * Ativa a flag `fast_executemany = True` do PyODBC para alcançar a **velocidade máxima de inserção**.
   * Utiliza a biblioteca `tqdm` para exibir uma barra de carregamento interativa no terminal, mostrando o progresso em tempo real.
 
-## ☁️ Arquitetura de Nuvem: Azure SQL Database vs. Managed Instance
-
-Para a infraestrutura deste Data Warehouse, a escolha da plataforma de banco de dados na nuvem seguiu critérios rigorosos de **desempenho, escalabilidade, compatibilidade e otimização de custos**. Optou-se pelo **Azure SQL Database** em detrimento de uma instância *Managed Instance (MI)* ou de infraestrutura como serviço (IaaS/VM).
-
-Abaixo está o comparativo técnico que fundamenta essa decisão para o ecossistema do projeto:
-
-### 📊 Tabela Comparativa de Decisão
-
-| Critério | Azure SQL Database (PaaS) | SQL Server Managed Instance (MI) |
-| :--- | :--- | :--- |
-| **Modelo de Serviço** | PaaS (Banco de Dados como Serviço) | PaaS (Instância Gerenciada de Servidor) |
-| **Foco Principal** | Aplicações modernas e microsserviços | Migração *Lift-and-Shift* de legados |
-| **Gerenciamento** | Totalmente automatizado (SaaS/PaaS) | Gerenciado, mas exige foco em instâncias |
-| **Escalabilidade** | Imediata (Opção Serverless disponível) | Requer redimensionamento de nós/tier |
-| **Modelo de Custos** | Baseado em consumo (vCore / DTU) | Fixo por nó alocado (geralmente mais alto) |
-| **Escopo de Isolamento** | Baseado em banco de dados isolado | Instância completa (vários DBs, Agent, etc.) |
-
 ---
 ## 🗂️ Estrutura do Projeto
 
@@ -378,28 +341,6 @@ project_adventureworksDW2022/
 └── README.md                # Documentação oficial da arquitetura e projeto
 ```
 
-### Análise dos Requisitos:
-
-#### 1. Requisitos e Compatibilidade
-* **Azure SQL Database:** Perfeito para o projeto, pois o escopo se concentra na estruturação de um modelo relacional analítico (Data Warehouse) e ingestão via scripts Python. Ele oferece suporte a quase 100% dos recursos transacionais e analíticos do SQL Server sem a necessidade de gerenciar uma instância inteira.
-* **Managed Instance:** Projetada estritamente para cenários onde sistemas legados dependem de recursos a nível de instância (como *SQL Agent Jobs* complexos, *Cross-Database Queries* pesadas ou CLR). Como este projeto é uma pipeline moderna, a MI introduziria uma complexidade e sobrecarga desnecessárias.
-
-#### 2. Desempenho e Escalabilidade
-* **Azure SQL Database:** Oferece suporte à modalidade **Serverless**, permitindo pausar automaticamente o banco de dados em períodos de ociosidade — gerando economia significativa de recursos — e escalando os recursos computacionais de forma instantânea mediante a chegada de novas cargas de trabalho ou consultas do Power BI.
-* **Managed Instance:** Os recursos computacionais permanecem alocados e cobrados de forma contínua, o que faz sentido para ambientes corporativos pesados 24/7, mas representa desperdício financeiro em ambientes de desenvolvimento e portfólios analíticos.
-
-#### 3. Custos e Otimização Financeira
-* **Azure SQL Database:** Modelo de cobrança altamente flexível, ideal para projetos de médio porte e portfólios de dados, permitindo pagar estritamente pelo uso computacional ou pelas DTUs consumidas.
-* **Managed Instance:** Possui um piso de custo mensal elevado devido à exigência de provisionamento de uma infraestrutura de instância dedicada inteira, sendo inviável para projetos enxutos.
-
----
-
-### Veredito da Arquitetura:
-A adoção do **Azure SQL Database** garantiu:
-1. **Agilidade no Deploy:** Provisionamento e ajustes de schema automatizados via scripts Python/DDL.
-2. **Manutenção Zero:** Foco absoluto na engenharia de dados e modelagem, delegando a aplicação de patches e atualizações de infraestrutura para a Microsoft.
-3. **Integração Nativa com Power BI:** Conectividade otimizada e nativa para a camada de visualização de dados sem barreiras de rede complexas.
-
 
 # Atenção: Migração para Azure e o Azure Database Migration Service (DMS)
 
@@ -421,14 +362,7 @@ A resposta curta é: **não, ele não é caro**, e para a maioria dos cenários 
     *   **Custo:** **Gratuito pelos primeiros 183 dias** (aprox. 6 meses).
     *   **Após o período:** Cobrado por vCore por hora. Na prática, como a maioria das migrações é concluída muito antes desse prazo, o custo da ferramenta acaba sendo zero para a maioria das empresas.
 
-## 3. Onde está o custo real da migração?
-Embora a ferramenta DMS seja gratuita, você deve considerar os custos operacionais do projeto:
-
-1.  **Destino (Azure SQL Database):** Este é o seu custo fixo mensal. O preço depende do nível de performance (vCores ou DTUs) e do armazenamento (GB) que você selecionar.
-2.  **Armazenamento e Transferência de Dados:** Podem existir custos de armazenamento de backups ou tráfego de dados, dependendo do volume.
-3.  **Mão de Obra e Consultoria:** O maior investimento em projetos de migração geralmente é o tempo da equipe técnica para preparar o ambiente, garantir a compatibilidade e validar a integridade dos dados pós-migração.
-
-## 4. Conclusão
+## 3. Conclusão
 A abordagem manual (via script Python) é extremamente econômica, não pago por ferramentas extras. Migrar usando o DMS oficial é uma excelente escolha para automatizar processos, e como a ferramenta é gratuita (ou tem um período de tolerância muito longo), **o custo da ferramenta DMS não deve ser uma barreira para o seu projeto**.
 
 ---

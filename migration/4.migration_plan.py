@@ -40,26 +40,50 @@ def load_inventory():
 # TRADUÇÃO DE TIPOS (AZURE SQL)
 def get_azure_sql_type(col_data):
     """
-    Traduz os metadados do inventário para a sintaxe DDL correta do Azure SQL Database.
-    Evita erros como 'int(10,0)' que não são aceitos no CREATE TABLE.
+    Converte os metadados de uma coluna, obtidos do inventário do banco,
+    para a sintaxe de tipo de dado válida no DDL do Azure SQL Database.
+
+    Exemplos:
+        NVARCHAR + tamanho 50     -> NVARCHAR(50)
+        VARCHAR + tamanho -1      -> VARCHAR(MAX)
+        DECIMAL + precisão/escala -> DECIMAL(18,2)
+        INT                       -> INT
+        DATETIME                  -> DATETIME
+
+    Args:
+        col_data (dict):
+            Dicionário contendo os metadados de uma coluna.
+
+    Returns:
+        str: Tipo de dado formatado para utilização no CREATE TABLE.
     """
-    base_type = col_data.get("data_type", "").upper()
-    max_len = col_data.get("character_maximum_length")
+    base_type = col_data.get("data_type", "").upper()  
+    # Formata a tipagem de dados letra maiúscula: "nvarchar" -> "NVARCHAR"
+    max_len = col_data.get("character_maximum_length") 
+    # Obtém o tamanho máximo de caracteres texto e binário
     precision = col_data.get("numeric_precision")
     scale = col_data.get("numeric_scale")
     
     # Tipos de texto e binários precisam de tamanho especificado
-    if base_type in ["VARCHAR", "NVARCHAR", "CHAR", "NCHAR", "VARBINARY", "BINARY"]:
+    sized_types = {
+        "VARCHAR", "NVARCHAR", "CHAR", "NCHAR", "VARBINARY", "BINARY"}
+    if base_type in sized_types:        
+        # No SQL Server, -1 representa MAX.
         if max_len == -1:
             return f"{base_type}(MAX)"
-        elif max_len:
+        # Exemplo: NVARCHAR + 50 -> NVARCHAR(50)
+        if max_len is not None:
             return f"{base_type}({max_len})"
-            
-    # Tipos decimais precisam de precisão e escala
-    elif base_type in ["DECIMAL", "NUMERIC"]:
+        # Caso não exista tamanho informado.
+        return base_type            
+    # Tipos decimais e numeric precisam de precisão e escala:
+    if base_type in ["DECIMAL", "NUMERIC"]:
         if precision is not None and scale is not None:
             return f"{base_type}({precision},{scale})"
-            
+        # Caso os metadados não tenham precisão/escala.            
+        return base_type
+    # Tipos como INT, BIGINT, DATE, DATETIME, BIT etc.
+    # não precisam de tamanho, precisão ou escala no DDL.
     return base_type
 
 # NORMALIZAÇÃO: Função auxiliar que busca listas dentro do inventário usando diferentes nomes
@@ -68,6 +92,8 @@ def get_list(data, *keys):
     """
     Procura uma lista em diferentes possíveis estruturas do inventory.json.
     Deixa o script mais tolerante a pequenas mudanças no formato.
+    Ela navega pelas chaves informadas e, se no final encontrar uma lista,
+    retorna essa lista; caso contrário, retorna uma lista vazia [].
     """
     current = data
     for key in keys:
@@ -76,38 +102,50 @@ def get_list(data, *keys):
     return current if isinstance(current, list) else []
 
 # EXTRAÇÃO DE TABELAS E COLUNAS
-def build_tables(inventory):
+def build_tables(inventory): # <- Carrega o 'inventory'
     """
     Extrai as tabelas do inventário e organiza as informações
     necessárias para a criação do schema.
     """
     tables = []
+    # Buscar a tabela no formato do inventory.json
     raw_tables = inventory.get("tables") if isinstance(inventory, dict) else None
 
     if not isinstance(raw_tables, list):
         return tables
-
+    # Se "tables" não existir ou não for uma lista, a função retorna uma lista vazia.
+    # Percorre cada tabela que possui o formato esperado>:
     for table in raw_tables:
         if not isinstance(table, dict):
             continue
         schema_name = table.get("schema") or table.get("schema_name", "dbo")
+        # Permite aceitar duas possíveis estruturas
         table_name = table.get("table") or table.get("name") 
+        # Permite aceitar duas possíveis estruturas de tabela
         # Ajustado para pegar "name" caso "table" falhe
         if not table_name:
             continue
+        # Busca as colunas dentro da tabela, buscar o valor das chaves, se não existir, usa list vazia.
+        # Com a lista vazia não gera erro.
         raw_columns = table.get("columns", [])
+        # Aqui garante que 'raw_columns' sempre será uma lista caso saia uma string.
         if not isinstance(raw_columns, list):
             raw_columns = []
-         
-        processed_columns = []
+# Aqui processa cada coluna da tabela. 'raw_columns' já está preparada e formatada.          
+        processed_columns = [] # <- Por isso essa variável irá receber as colunas formatadas
+        # Assim o python irá percorrer cada coluna.
         for col in raw_columns:
 # Preserva todos os atributos originais da coluna, mas injeta o tipo corrigido pro Azure
-            new_col = dict(col)
+            new_col = dict(col)  # <- Preserva os dados originais, cria uma cópia da coluna.
+            # Nova coluna para o tipo de dados que o Azure aceita. O 'data_type' ainda está lá, original.
             new_col["azure_sql_type"] = get_azure_sql_type(col)
+            # Nova coluna para 'nullable', se não informação 'nullable' não existir, usar TRUE.
+            # Por padrão, é permitido NULL
             new_col["is_nullable"] = col.get("nullable", True)
-            new_col["is_identity"] = col.get("identity", False)
-            processed_columns.append(new_col)
 
+            new_col["is_identity"] = col.get("identity", False)
+            processed_columns.append(new_col) # Adiciona dentro da lista todo o processo.
+# Montagem da estrutura final da tabela:
         tables.append(
             {
                 "schema": schema_name,
