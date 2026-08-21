@@ -107,7 +107,7 @@ FROM dbo.AlgumaTabela;
 
 A decisão de migrar geralmente envolve sair de um cenário de alto custo, engessamento ou manutenção pesada para um ambiente moderno e eficiente. Aqui estão os principais motivos para considerar a migração:
 
-1. Redução Drástica de Custos:
+### 1. Redução Drástica de Custos:
 - Fim da manutenção de hardware: Em ambientes locais (on-premises), você gasta com servidores físicos, energia, refrigeração, licenças caras de sistema operacional e equipe para cuidar do hardware. Na nuvem, tudo isso desaparece.
 
 - Modelos flexíveis de pagamento: No Azure SQL Database, você paga apenas pelo que usa. Se o seu banco fica ocioso à noite ou nos fins de semana, você pode usar opções como o modelo Serverless, que pausa a computação automaticamente e reduz drasticamente a fatura.
@@ -116,12 +116,12 @@ A decisão de migrar geralmente envolve sair de um cenário de alto custo, enges
 
 - O Managed Instance exige uma estrutura de instância dedicada (vCores fixos e infraestrutura de rede mais complexas), o que torna o custo mensal base consideravelmente mais alto, ideal apenas para grandes empresas que precisam migrar sistemas legados complexos sem alterar códigos.
 
-2. Escalabilidade Instantânea
+### 2. Escalabilidade Instantânea
 - Em um servidor físico ou instância rígida, se o seu volume de dados crescer ou se o Power BI exigir muito processamento, você precisará comprar um servidor novo (o que leva semanas e é caro).
 
 - Na nuvem, você muda a capacidade (vCores ou armazenamento) com um clique ou via script, dimensionando os recursos para cima ou para baixo conforme a demanda do seu negócio em tempo real.
 
-3. Eliminação da Manutenção de Infraestrutura (PaaS)
+### 3. Eliminação da Manutenção de Infraestrutura (PaaS)
 Com o Banco de Dados como Serviço (PaaS), você não precisa se preocupar com:
 - Instalação de atualizações de segurança do sistema operacional.
 - Patches de correção do SQL Server.
@@ -129,23 +129,23 @@ Com o Banco de Dados como Serviço (PaaS), você não precisa se preocupar com:
 
 A própria Microsoft gerencia a infraestrutura básica, garantindo atualizações automáticas e alta disponibilidade nativa, permitindo que a sua equipe foque apenas nos dados e nas regras de negócio.
 
-4. Segurança e Conformidade Avançadas:
+### 4. Segurança e Conformidade Avançadas:
 
 O Azure oferece camadas de segurança de nível corporativo prontas para uso, como criptografia de dados em repouso e em trânsito por padrão, mascaramento de dados confidenciais, detecção de ameaças orientada por inteligência artificial e conformidade com normas globais (LGPD, ISO, SOC, etc.). Implementar isso do zero em um ambiente local exige um esforço técnico e financeiro gigantesco.
 
-5. Facilidade de Integração com o ecossistema de Dados e IA:
+### 5. Facilidade de Integração com o ecossistema de Dados e IA:
 
 Migrar para o Azure coloca o seu banco de dados no centro de um ecossistema moderno. Fica extremamente simples conectar seus dados a ferramentas de nuvem como Azure Data Factory, Power BI Service, Azure Synapse, ferramentas de Inteligência Artificial e Machine Learning, criando um fluxo de dados rápido e sem fricções de rede.
 
-6. Escalabilidade Elástica para Picos de Carga do Power BI:
+### 6. Escalabilidade Elástica para Picos de Carga do Power BI:
 
 Quando o Power BI atualiza um conjunto de dados pesado (DirectQuery ou importações massivas), ele dispara muitas consultas simultâneas que consomem bastante CPU e memória do banco.
 
 O Azure SQL Database permite usar Elastic Pools (Pools Elásticos) ou redimensionar recursos computacionais de forma instantânea (subir ou descer vCores com poucos cliques ou via código) para absorver essa carga sem pagar o preço de uma instância dedicada o tempo todo.
 
-## Análise de custos:
+## Análise de custos (estimativa):
 
-Para montar seu trabalho considerando uma simulação de 3 dias (72 horas) de processamento ou uso contínuo, vamos usar a base de cálculo real de preços públicos do Azure (região East US, Camada General Purpose, modelo de vCore provisionado sem descontos de licença prévia).
+Considerando uma simulação de 3 dias (72 horas) de processamento ou uso contínuo, vamos usar a base de cálculo real de preços públicos do Azure (região East US, Camada General Purpose, modelo de vCore provisionado sem descontos de licença prévia).
 
 ### Cenário de Comparação:
 
@@ -159,11 +159,11 @@ O Azure SQL Database cobra separadamente a computação por hora e o armazenamen
 - Custo de Computação (4 vCores):
 Taxa por hora aprox.: ~$1.01 USD por hora.
 
-- Para 72 horas: $1.01 \times 72 = \mathbf{\$72.72 \text{ USD}}$
+- Para 72 horas: $1.01 x 72 = **$72.72 USD**
 - Custo de Armazenamento (250 GB por 3 dias): Taxa mensal aprox. do armazenamento LRS: ~$0.115 por GB/mês.
 
-- Custo total de armazenamento no mês: $250 \times 0.115 = \$28.75$. Proporcional a 3 dias ($3/30$ avos): $\mathbf{\$2.88 \text{ USD}}$
-Total Estimado para 3 dias (Azure SQL Database): $\mathbf{\$75.60 \text{ USD}}$
+- Custo total de armazenamento no mês:**$250 X 0.115 = $28.75**. Proporcional a 3 dias ($3/30$ avos): **$2.88 USD**
+- Total Estimado para 3 dias (Azure SQL Database): **75.60 USD**
 
 ### Opção 2: Azure SQL Managed Instance 
 
@@ -172,11 +172,12 @@ A Instância Gerenciada possui um custo base de infraestrutura e licenciamento m
 - Custo de Computação e Instância (4 vCores):
 O custo horário para uma Managed Instance de 4 vCores gira em torno de ~$1.47 USD por hora (incluindo licença base e infraestrutura de rede gerenciada).
 
-- Para 72 horas: $1.47 \times 72 = \mathbf{\$105.84 \text{ USD}}$ (Nota: dependendo da série de hardware e região, instâncias menores de MI podem cobrar taxas fixas mensais rateadas).
+- Para 72 horas: $1.47 X 72 = **$105.84 USD** 
+*(Nota: dependendo da série de hardware e região, instâncias menores de MI podem cobrar taxas fixas mensais rateadas).*
 
-- Custo de Armazenamento (32 GB a 250 GB inclusos na base):Proporcional a 3 dias de infraestrutura de dados alocada: aprox. $\mathbf{\$15.00 \text{ USD}}$.
+- Custo de Armazenamento (32 GB a 250 GB inclusos na base):Proporcional a 3 dias de infraestrutura de dados alocada: aprox. **15.00  USD**
 
-- Total Estimado para 3 dias (Managed Instance): $\mathbf{\$120.84 \text{ USD}}$ (podendo ser consideravelmente maior dependendo da complexidade da VNet e dos custos ocultos de backup de instância).
+- Total Estimado para 3 dias (Managed Instance): **120.84 USD** (podendo ser consideravelmente maior dependendo da complexidade da VNet e dos custos ocultos de backup de instância).
 
 
 | Componente de Análise | Azure SQL Database | Azure SQL Managed Instance |
@@ -186,7 +187,7 @@ O custo horário para uma Managed Instance de 4 vCores gira em torno de ~$1.47 U
 | **Custo Total do Projeto (3 Dias)** | **~$75.60 USD** | **~$120.84 USD** |
 | **Diferença Percentual** | Referência base (Mais econômico) | **~60% mais caro** para o mesmo período |
 
-A branch `migration-azure-database` existe para estudar justamente essa possibilidade. O objetivo não é substituir imediatamente a arquitetura atual, mas avaliar:
+A branch `migration-azure-database` existe para estudar justamente essa possibilidade. O objetivo não é substituir imediatamente a arquitetura, mas avaliar:
 
 1. Compatibilidade do AdventureWorksDW2022 com Azure SQL Database.
 2. Estratégias de migração.
@@ -208,7 +209,7 @@ A SQL Managed Instance permanece como o ambiente atual para restauração e exec
 
 A migração para Azure SQL Database representa uma possível evolução arquitetural para um cenário em que seja desejável utilizar o banco fora da Managed Instance atual.
 
-A decisão final deve considerar principalmente **compatibilidade, disponibilidade, complexidade operacional e custo**.
+*A decisão final deve considerar principalmente **compatibilidade, disponibilidade, complexidade operacional e custo**.*
 
 ## Inventário do banco:
 
@@ -273,6 +274,7 @@ Script que consome o inventário e constrói um **Plano de Migração** definiti
 - **Tradução de Tipos (Azure SQL Dialect):** Conversão de tipos incompatíveis ou legados (ex: `int(10,0)`) para a sintaxe rigorosa aceita pelo Azure SQL (`INT`, `NVARCHAR(MAX)`, etc).
 - **Extração e Estruturação:** Separação limpa de Schemas, Tabelas, Primary Keys (PKs), Foreign Keys (FKs) e Índices.
 - **Estratégia de Execução Segura:** Define uma ordem lógica para evitar erros de dependência:
+``` 
   1. Criação de Schemas
   2. Criação de Tabelas
   3. Criação de Primary Keys
@@ -280,7 +282,7 @@ Script que consome o inventário e constrói um **Plano de Migração** definiti
   5. Carga de Dados (Load Data)
   6. Criação de Foreign Keys
   7. Validação de Migração
-
+```
 ### 3. Fase de Geração de Schema DDL (`migration_schema.py`)
 
 Script em Python puro (sem uso de ORMs como SQLAlchemy) que lê o plano de migração gerado e constrói o código SQL exato para a infraestrutura no Azure.
@@ -314,7 +316,7 @@ Este script é a ponte entre o seu projeto local e a nuvem. Ele é responsável 
 
 O script **`load_data.py`** é o motor responsável por extrair os dados da sua origem (Managed Instance) e inseri-los de forma segura, otimizada e monitorada no destino (Azure SQL Database).
 
-## Como Funciona o Script
+### 5.1 - Como Funciona o Script
 
 ### 1. Leitura do Plano de Migração
 * **O que faz:** Lê o arquivo `migration_plan.json` gerado anteriormente para descobrir exatamente quais tabelas precisam ser migradas, evitando que você precise digitar o nome de cada uma manualmente.
@@ -342,4 +344,6 @@ O script **`load_data.py`** é o motor responsável por extrair os dados da sua 
 *A evolução arquitetural documentada nesta branch demonstra que a transição de um ambiente pesado de SQL Managed Instance para um serviço enxuto e escalável como o Azure SQL Database traz ganhos expressivos em termos de agilidade de desenvolvimento, automação via código Python e otimização financeira significativa (especialmente através do modelo Serverless e do controle de infraestrutura ociosa).*
 
 *Com a infraestrutura de banco de dados modelada, deployada e validada com sucesso, o projeto encerra sua fase de infraestrutura de dados e está pronto para avançar para a camada analítica e de visualização utilizando o Power BI.*
+
+
 
