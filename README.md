@@ -25,7 +25,7 @@ A arquitetura utiliza um arquivo de backup `.bak` armazenado no Azure Blob Stora
 
 A ideia principal é evitar manter a infraestrutura computacional ativa durante períodos em que o banco não está sendo utilizado.
 
-## Arquitetura
+## Arquitetura Inicial:
 
 ```text
 AdventureWorksDW2022.bak
@@ -72,7 +72,7 @@ A estratégia, portanto, é utilizar a infraestrutura computacional somente quan
 Por isso, o arquivo `.bak` armazenado no Blob Storage é importante como cópia de segurança e como mecanismo de recuperação.
 
 
-## Estrutura do projeto
+## Estrutura Inicial:
 
 ```text
 project_adventureworksDW2022/
@@ -110,7 +110,7 @@ Centraliza a criação da conexão com a SQL Managed Instance utilizando autenti
 
 > Após a restauração, o banco permanece disponível dentro da Managed Instance enquanto a instância estiver ativa.
 
-## Possível evolução da arquitetura
+## Possível evolução da arquitetura:
 
 Uma evolução possível deste projeto seria migrar o banco ou seus dados para outro serviço de dados da Azure.
 
@@ -132,6 +132,8 @@ Para manter o projeto simples e econômico, a estratégia atual é:
 
 Essa estratégia evita manter uma infraestrutura de banco de dados ativa continuamente quando ela não está sendo utilizada.
 
+## Migration Azure Database - AdventureWorksDW2022
+
 A segunda página do projeto apresenta a evolução da solução e as decisões tomadas ao longo do processo de migração. Embora existam diversos recursos disponíveis no Portal do Azure capazes de automatizar parte ou toda a migração, como BACPAC, Azure Data Factory, replicação e outras ferramentas nativas, a decisão de desenvolver uma abordagem mais hardcoded e programática foi intencional.
 
 O objetivo foi compreender e controlar cada etapa do processo, desde a conexão com a infraestrutura local e em nuvem até a extração dos metadados, análise das tabelas, geração do plano de migração, criação dos schemas e carregamento dos dados.
@@ -146,9 +148,9 @@ Assim, mais do que apenas realizar uma migração utilizando ferramentas prontas
 
 [Migração para Azure Database SQL](https://github.com/userdanixdev/azure-adventureworks/tree/migration-azure-database)
 
-## Considerações
+## Considerações gerais:
 
-Este projeto tem caráter educacional e experimental, sendo utilizado para estudar a utilização de SQL Server na Azure, automação com Python, autenticação Microsoft Entra ID, armazenamento de backups e estratégias de otimização de infraestrutura.
+Este projeto tem caráter educacional e experimental, sendo utilizado para estudar a utilização de SQL Server na Azure, automação com Python, autenticação Microsoft Entra ID, armazenamento de backups, estratégias de otimização de infraestrutura.
 
 A arquitetura também serve como base para estudos futuros envolvendo Power BI, processos de ETL/ELT, modelagem dimensional, análise de dados e migração de workloads SQL Server para serviços gerenciados da Azure.
 
