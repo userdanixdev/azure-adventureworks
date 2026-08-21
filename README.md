@@ -61,8 +61,6 @@ SQL Server
         para o Azure SQL Database
 ```
 
-## Por que o fato de ser SQL Server é importante?
-
 O AdventureWorksDW2022 é um banco desenvolvido para o ecossistema SQL Server.
 
 Por isso, uma migração para outro serviço SQL da Azure pode aproveitar diversos componentes e conceitos existentes no SQL Server, como:
@@ -167,7 +165,7 @@ Taxa por hora aprox.: ~$1.01 USD por hora.
 - Custo total de armazenamento no mês: $250 \times 0.115 = \$28.75$. Proporcional a 3 dias ($3/30$ avos): $\mathbf{\$2.88 \text{ USD}}$
 Total Estimado para 3 dias (Azure SQL Database): $\mathbf{\$75.60 \text{ USD}}$
 
-### Opção 2: Azure SQL Managed Instance (General Purpose)
+### Opção 2: Azure SQL Managed Instance 
 
 A Instância Gerenciada possui um custo base de infraestrutura e licenciamento mais elevado porque entrega uma instância isolada com rede virtual dedicada, cobrando um mínimo de armazenamento base incluído. 
 
@@ -188,11 +186,7 @@ O custo horário para uma Managed Instance de 4 vCores gira em torno de ~$1.47 U
 | **Custo Total do Projeto (3 Dias)** | **~$75.60 USD** | **~$120.84 USD** |
 | **Diferença Percentual** | Referência base (Mais econômico) | **~60% mais caro** para o mesmo período |
 
-## O objetivo desta branch
-
-A branch `migration-azure-database` existe para estudar justamente essa possibilidade.
-
-O objetivo não é substituir imediatamente a arquitetura atual, mas avaliar:
+A branch `migration-azure-database` existe para estudar justamente essa possibilidade. O objetivo não é substituir imediatamente a arquitetura atual, mas avaliar:
 
 1. Compatibilidade do AdventureWorksDW2022 com Azure SQL Database.
 2. Estratégias de migração.
@@ -205,8 +199,6 @@ O objetivo não é substituir imediatamente a arquitetura atual, mas avaliar:
 9. Benefícios de manter o banco disponível independentemente da Managed Instance.
 
 ## Conclusão
-
-O AdventureWorksDW2022 não pode ser tratado simplesmente como um conjunto de arquivos `.mdf`, `.ndf` e `.ldf` que podem ser copiados diretamente para o Azure SQL Database.
 
 O Azure SQL Database é um serviço PaaS que abstrai a infraestrutura física do SQL Server. Por isso, a transferência para esse serviço exige uma estratégia de migração compatível com sua arquitetura.
 
@@ -229,6 +221,40 @@ Também são levantadas as estruturas relacionais e de banco, incluindo Primary 
 Além da exibição das informações no terminal, o script gera automaticamente um arquivo adventureworks_inventory.json dentro do diretório inventory/. O JSON funciona como um snapshot estruturado da origem, podendo ser utilizado posteriormente pelo processo de migração e na comparação entre o banco da Managed Instance e o Azure SQL Database.
 
 O inventário foi definido como uma etapa anterior à migração para garantir que estrutura, relacionamentos, índices e quantidade de dados sejam conhecidos antes da criação e carga do banco definitivo.
+
+## 🗂️ Estrutura do Projeto
+
+O repositório está organizado em módulos que separam as etapas de restauração de backup, auditoria estrutural (inventário), planejamento e implantação do schema no Azure:
+
+```text
+project_adventureworksDW2022/
+│
+├── .vscode/                 # Configurações do editor
+├── inventory/               # Dados estruturais extraídos da origem
+│   └── adventureworks_inventory.json  # Snapshot completo do schema original
+│
+├── migration/               # Scripts de engenharia e deploy para o Azure SQL
+│   ├── 01_create_schema_and_tables.sql  # DDL limpo gerado para o Azure
+│   ├── deploy_schema.py     # Script de conexão e execução automatizada via ODBC
+│   ├── migration_plan.json  # Plano estruturado e mapeado de tipos de dados
+│   ├── migration_plan.py    # Conversor/Planejador de migração inteligente
+│   └── migration_schema.py  # Gerador de código DDL em Raw SQL (sem ORM)
+│   └── load_data.py         # Extrair os dados de origem
+│
+├── restore_database/        # Módulo de manipulação e auditoria na Managed Instance
+│   ├── 1.restore_bak.py     # Automação de restore do .bak via Blob Storage
+│   ├── 2.queries.py         # Consultas de validação inicial
+│   ├── 3.inventory.py       # Extração de metadados, PKs, FKs e contagem de linhas
+│   ├── a.restore_status.py  # Monitoramento do status do banco
+│   └── connection.py        # Configuração centralizada de conexão com a MI
+│
+├── .env                     # Variáveis de ambiente e credenciais (excluído do Git)
+├── .gitignore               # Arquivos ignorados pelo controle de versão
+├── environment.yml          # Dependências e ambiente conda do projeto
+└── README.md                # Documentação oficial da arquitetura e projeto
+```
+
+
 
 ## 🏗️ Arquitetura da Migração
 
@@ -308,64 +334,7 @@ O script **`load_data.py`** é o motor responsável por extrair os dados da sua 
   * Ativa a flag `fast_executemany = True` do PyODBC para alcançar a **velocidade máxima de inserção**.
   * Utiliza a biblioteca `tqdm` para exibir uma barra de carregamento interativa no terminal, mostrando o progresso em tempo real.
 
----
-## 🗂️ Estrutura do Projeto
 
-O repositório está organizado em módulos que separam as etapas de restauração de backup, auditoria estrutural (inventário), planejamento e implantação do schema no Azure:
-
-```text
-project_adventureworksDW2022/
-│
-├── .vscode/                 # Configurações do editor
-├── inventory/               # Dados estruturais extraídos da origem
-│   └── adventureworks_inventory.json  # Snapshot completo do schema original
-│
-├── migration/               # Scripts de engenharia e deploy para o Azure SQL
-│   ├── 01_create_schema_and_tables.sql  # DDL limpo gerado para o Azure
-│   ├── deploy_schema.py     # Script de conexão e execução automatizada via ODBC
-│   ├── migration_plan.json  # Plano estruturado e mapeado de tipos de dados
-│   ├── migration_plan.py    # Conversor/Planejador de migração inteligente
-│   └── migration_schema.py  # Gerador de código DDL em Raw SQL (sem ORM)
-│   └── load_data.py         # Extrair os dados de origem
-│
-├── restore_database/        # Módulo de manipulação e auditoria na Managed Instance
-│   ├── 1.restore_bak.py     # Automação de restore do .bak via Blob Storage
-│   ├── 2.queries.py         # Consultas de validação inicial
-│   ├── 3.inventory.py       # Extração de metadados, PKs, FKs e contagem de linhas
-│   ├── a.restore_status.py  # Monitoramento do status do banco
-│   └── connection.py        # Configuração centralizada de conexão com a MI
-│
-├── .env                     # Variáveis de ambiente e credenciais (excluído do Git)
-├── .gitignore               # Arquivos ignorados pelo controle de versão
-├── environment.yml          # Dependências e ambiente conda do projeto
-└── README.md                # Documentação oficial da arquitetura e projeto
-```
-
-
-# Atenção: Migração para Azure e o Azure Database Migration Service (DMS)
-
-## 1. O que é o Azure Database Migration Service (DMS)?
-O Azure DMS é um serviço totalmente gerenciado, projetado para permitir migrações perfeitas de várias fontes de banco de dados para as plataformas de dados do Azure com tempo de inatividade mínimo.
-
-## 2. Custos do DMS: É caro?
-A resposta curta é: **não, ele não é caro**, e para a maioria dos cenários de migração, ele é **totalmente gratuito**.
-
-### Níveis de Serviço e Precificação:
-
-*   **Nível Standard (Gratuito):**
-    *   **Finalidade:** Ideal para migrações "offline".
-    *   **Cenário:** Quando você pode permitir uma janela de manutenção onde a aplicação para, permitindo a cópia dos dados.
-    *   **Custo:** **$0 (Gratuito)**. É a opção ideal para a maioria dos projetos de pequeno e médio porte.
-
-*   **Nível Premium (Tempo de Indisponibilidade Mínimo):**
-    *   **Finalidade:** Ideal para bancos de dados críticos que exigem migração "online" com sincronização contínua.
-    *   **Custo:** **Gratuito pelos primeiros 183 dias** (aprox. 6 meses).
-    *   **Após o período:** Cobrado por vCore por hora. Na prática, como a maioria das migrações é concluída muito antes desse prazo, o custo da ferramenta acaba sendo zero para a maioria das empresas.
-
-## 3. Conclusão
-A abordagem manual (via script Python) é extremamente econômica, não pago por ferramentas extras. Migrar usando o DMS oficial é uma excelente escolha para automatizar processos, e como a ferramenta é gratuita (ou tem um período de tolerância muito longo), **o custo da ferramenta DMS não deve ser uma barreira para o seu projeto**.
-
----
 *Referência: [Visão geral do Azure Database Migration Service](https://learn.microsoft.com/pt-br/azure/dms/dms-overview)*
 
 ---
