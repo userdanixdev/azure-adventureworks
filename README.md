@@ -180,18 +180,6 @@ A branch `migration-azure-database` existe para estudar justamente essa possibil
 8. Custo da nova arquitetura.
 9. Benefícios de manter o banco disponível independentemente da Managed Instance.
 
-## Conclusão
-
-O Azure SQL Database é um serviço PaaS que abstrai a infraestrutura física do SQL Server. Por isso, a transferência para esse serviço exige uma estratégia de migração compatível com sua arquitetura.
-
-O arquivo `.bak` continua sendo extremamente útil como backup e pode permanecer no Azure Blob Storage independentemente da execução da Managed Instance.
-
-A SQL Managed Instance permanece como o ambiente atual para restauração e execução do AdventureWorksDW2022.
-
-A migração para Azure SQL Database representa uma possível evolução arquitetural para um cenário em que seja desejável utilizar o banco fora da Managed Instance atual.
-
-*A decisão final deve considerar principalmente **compatibilidade, disponibilidade, complexidade operacional e custo**.*
-
 ## 🗂️ Estrutura do Projeto
 
 O repositório está organizado em módulos que separam as etapas de restauração de backup, auditoria estrutural (inventário), planejamento e implantação do schema no Azure:
@@ -244,6 +232,19 @@ O fluxo da migração segue as seguintes etapas:
 ![](/images/fluxo_project_adventure%20(1).png)
 ---
 
+## Conclusão
+
+O Azure SQL Database é um serviço PaaS que abstrai a infraestrutura física do SQL Server. Por isso, a transferência para esse serviço exige uma estratégia de migração compatível com sua arquitetura.
+
+O arquivo `.bak` continua sendo extremamente útil como backup e pode permanecer no Azure Blob Storage independentemente da execução da Managed Instance.
+
+A SQL Managed Instance permanece como o ambiente atual para restauração e execução do AdventureWorksDW2022.
+
+A migração para Azure SQL Database representa uma possível evolução arquitetural para um cenário em que seja desejável utilizar o banco fora da Managed Instance atual.
+
+*A decisão final deve considerar principalmente **compatibilidade, disponibilidade, complexidade operacional e custo**.*
+
+---
 *A evolução arquitetural documentada nesta branch demonstra que a transição de um ambiente pesado de SQL Managed Instance para um serviço enxuto e escalável como o Azure SQL Database traz ganhos expressivos em termos de agilidade de desenvolvimento, automação via código Python e otimização financeira significativa (especialmente através do modelo Serverless e do controle de infraestrutura ociosa).*
 
 *Com a infraestrutura de banco de dados modelada, deployada e validada com sucesso, o projeto encerra sua fase de infraestrutura de dados e está pronto para avançar para a camada analítica e de visualização utilizando o Power BI.*
