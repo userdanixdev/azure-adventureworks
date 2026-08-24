@@ -111,3 +111,9 @@ A documentação permite explorar:
 ➡️ <a href="https://userdanixdev.github.io/azure-adventureworks/#!/overview" target="_blank">
 GITHUB PAGES - AdventureWorksDW2022
 </a>
+
+🔗 A documentação se encontra logo abaixo:
+
+➡️ <a href="https://userdanixdev.github.io/azure-adventureworks/#!/overview" target="_blank" rel="noopener noreferrer">
+GITHUB PAGES - AdventureWorksDW2022
+</a>
