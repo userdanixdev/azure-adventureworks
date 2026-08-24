@@ -107,7 +107,7 @@ A documentação permite explorar:
 
 ➡️ [GITHUB PAGES - AdventureWorksDW2022](https://userdanixdev.github.io/azure-adventureworks/#!/overview)
 
----
+
 ---
 ↩️ [Voltar para o plano de Migração - Azure](https://github.com/userdanixdev/azure-adventureworks/tree/migration-azure-database)
 
