@@ -1,15 +1,16 @@
-![Microsoft Azure](https://img.shields.io/badge/Microsoft%20Azure-0089D6?style=flat-square&logo=microsoftazure&logoColor=white)
-![Azure SQL Database](https://img.shields.io/badge/Azure%20SQL%20Database-0078D4?style=flat-square&logo=microsoftazure&logoColor=white)
-![SQL Server](https://img.shields.io/badge/SQL%20Server-CC2927?style=flat-square&logo=microsoftsqlserver&logoColor=white)
-![SQL](https://img.shields.io/badge/SQL-4479A1?style=flat-square&logo=database&logoColor=white)
-![T-SQL](https://img.shields.io/badge/T--SQL-CC2927?style=flat-square&logo=microsoftsqlserver&logoColor=white)
-![dbt Core](https://img.shields.io/badge/dbt%20Core-FF694B?style=flat-square&logo=dbt&logoColor=white)
-![dbt-sqlserver](https://img.shields.io/badge/dbt--sqlserver-FF694B?style=flat-square&logo=dbt&logoColor=white)
-![Python](https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white)
+![Microsoft Azure](https://img.shields.io/badge/Microsoft%20Azure-0089D6?style=flat&logo=microsoftazure&logoColor=white)
+![Azure SQL Database](https://img.shields.io/badge/Azure%20SQL%20Database-0078D4?style=flat&logo=microsoftazure&logoColor=white)
+![SQL Server](https://img.shields.io/badge/SQL%20Server-CC2927?style=flat&logo=microsoftsqlserver&logoColor=white)
+![SQL](https://img.shields.io/badge/SQL-4479A1?style=flat&logo=database&logoColor=white)
+![T-SQL](https://img.shields.io/badge/T--SQL-CC2927?style=flat&logo=microsoftsqlserver&logoColor=white)
+![dbt Core](https://img.shields.io/badge/dbt%20Core-FF694B?style=flat&logo=dbt&logoColor=white)
+![dbt-sqlserver](https://img.shields.io/badge/dbt--sqlserver-FF694B?style=flat&logo=dbt&logoColor=white)
+![Python](https://img.shields.io/badge/Python-3776AB?style=flat&logo=python&logoColor=white)
 
-![Microsoft Power BI](https://img.shields.io/badge/Power%20BI-F2C811?style=flat-square&logo=powerbi&logoColor=black)
-![Power Query](https://img.shields.io/badge/Power%20Query-F2C811?style=flat-square&logo=microsoft&logoColor=black)
-![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-222222?style=flat-square&logo=githubpages&logoColor=white)
+![Microsoft Power BI](https://img.shields.io/badge/Power%20BI-F2C811?style=flat&logo=powerbi&logoColor=black)
+![Power Query](https://img.shields.io/badge/Power%20Query-F2C811?style=flat&logo=microsoft&logoColor=black)
+
+![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-222222?style=flat&logo=githubpages&logoColor=white)
 
 # Data Visualization:
 
@@ -77,7 +78,7 @@ Abaixo podemos conferir a linhagem de dados, desde os dados brutos, tratamento e
 
 ![](/data_visualization/images/data_lineage.png)
 
-A documentação do projeto foi gerada automaticamente utilizando o dbt Docs.
+*A documentação do projeto foi gerada automaticamente utilizando o dbt Docs.*
 
 A documentação permite explorar:
 
@@ -106,14 +107,9 @@ A documentação permite explorar:
 
 ➡️ [GITHUB PAGES - AdventureWorksDW2022](https://userdanixdev.github.io/azure-adventureworks/#!/overview)
 
-🔗 A documentação se encontra logo abaixo:
+---
+---
+↩️ [Voltar para o plano de Migração - Azure](https://github.com/userdanixdev/azure-adventureworks/tree/migration-azure-database)
 
-➡️ <a href="https://userdanixdev.github.io/azure-adventureworks/#!/overview" target="_blank">
-GITHUB PAGES - AdventureWorksDW2022
-</a>
+↩️ [Voltar para o plano de Restauração - SQL Server - Azure](https://github.com/userdanixdev/azure-adventureworks)
 
-🔗 A documentação se encontra logo abaixo:
-
-➡️ <a href="https://userdanixdev.github.io/azure-adventureworks/#!/overview" target="_blank" rel="noopener noreferrer">
-GITHUB PAGES - AdventureWorksDW2022
-</a>
