@@ -43,6 +43,8 @@ O projeto contempla:
 
 ![](/data_visualization/images/fluxo_completo_project_adventureworks.png)
 
+---
+
 ## Transformação e Modelagem com dbt:
 
 A camada de transformação foi desenvolvida utilizando dbt Core e o adaptador dbt-sqlserver.
@@ -73,7 +75,7 @@ Esses modelos representam estruturas como:
 
 Abaixo podemos conferir a linhagem de dados, desde os dados brutos, tratamento e transformação até as regras de negócios:
 
-![](../project_adventureworksDW2022/data_visualization/images/data_lineage.png)
+![](/data_visualization/images/data_lineage.png)
 
 A documentação do projeto foi gerada automaticamente utilizando o dbt Docs.
 
@@ -104,5 +106,8 @@ A documentação permite explorar:
 
 ➡️ [GITHUB PAGES - AdventureWorksDW2022](https://userdanixdev.github.io/azure-adventureworks/#!/overview)
 
-Status geral: 🚧 Em desenvolvimento 
+🔗 A documentação se encontra logo abaixo:
 
+➡️ <a href="https://userdanixdev.github.io/azure-adventureworks/#!/overview" target="_blank">
+GITHUB PAGES - AdventureWorksDW2022
+</a>
