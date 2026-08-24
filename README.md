@@ -253,15 +253,20 @@ Azure SQL Managed Instance
         ▼
   Validação da Migração
 ```
-[Clique aqui para ver o plano de migração](https://github.com/userdanixdev/azure-adventureworks/tree/migration-azure-database/migration)
+[Clique aqui para ver os códigos plano de migração](https://github.com/userdanixdev/azure-adventureworks/tree/migration-azure-database/migration)
 
 *Os scripts desta pasta fazem parte da evolução do projeto, permitindo compreender e controlar cada etapa da migração entre os serviços Azure.*
 
+## Fluxo de Migração:
+
+![](/images/fluxo_project_adventure%20(1).png)
 ---
 
 *A evolução arquitetural documentada nesta branch demonstra que a transição de um ambiente pesado de SQL Managed Instance para um serviço enxuto e escalável como o Azure SQL Database traz ganhos expressivos em termos de agilidade de desenvolvimento, automação via código Python e otimização financeira significativa (especialmente através do modelo Serverless e do controle de infraestrutura ociosa).*
 
 *Com a infraestrutura de banco de dados modelada, deployada e validada com sucesso, o projeto encerra sua fase de infraestrutura de dados e está pronto para avançar para a camada analítica e de visualização utilizando o Power BI.*
 
+↩️ [Voltar para o plano de Restauração - SQL Server - Azure](https://github.com/userdanixdev/azure-adventureworks)
 
+➡️ [Seguir para documentação e visualização BI](https://github.com/userdanixdev/azure-adventureworks/tree/data-visualization)
 
