@@ -10,7 +10,6 @@ O objetivo desta etapa é transformar os dados armazenados no **Azure SQL Databa
 
 O desenvolvimento no Power BI incluirá atividades como:
 
-* Conexão com o Azure SQL Database;
 * Extração e preparação dos dados;
 * Transformações utilizando Power Query;
 * Modelagem de dados e definição de relacionamentos;

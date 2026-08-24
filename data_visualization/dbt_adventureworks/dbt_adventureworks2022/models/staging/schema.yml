@@ -1,0 +1,374 @@
+version: 2
+
+models:
+
+  - name: stg_dim_customer
+    description: >
+      Staging da dimensão de clientes do AdventureWorks.
+      Contém informações cadastrais, demográficas, de contato
+      e a referência geográfica dos clientes.
+
+    columns:
+
+      - name: cliente_id
+        description: "Identificador único do cliente."
+        data_tests:
+          - not_null
+          - unique
+
+      - name: cliente_id_alternativo
+        description: "Código alternativo do cliente."
+
+      - name: primeiro_nome
+        description: "Primeiro nome do cliente."
+
+      - name: nome_meio
+        description: "Nome do meio do cliente."
+
+      - name: sobrenome
+        description: "Sobrenome do cliente."
+
+      - name: data_nascimento
+        description: "Data de nascimento do cliente."
+
+      - name: estado_civil
+        description: "Código do estado civil do cliente."
+
+      - name: genero
+        description: "Código do gênero do cliente."
+
+      - name: email
+        description: "Endereço de e-mail do cliente."
+
+      - name: telefone
+        description: "Telefone do cliente."
+
+      - name: geografia_id
+        description: "Identificador da localização geográfica do cliente."
+        data_tests:
+          - relationships:
+              to: ref('stg_dim_geography')
+              field: geografia_id
+
+  - name: stg_dim_date
+    description: >
+      Staging da dimensão de datas do AdventureWorks.
+      Contém informações de calendário e período fiscal.
+      Os dados são filtrados para os anos de 2013 e 2014.
+
+    columns:
+
+      - name: data_id
+        description: "Identificador único da data."
+        data_tests:
+          - not_null
+          - unique
+
+      - name: data
+        description: "Data completa correspondente à chave da dimensão."
+
+      - name: nome_dia_semana
+        description: "Nome do dia da semana em inglês."
+
+      - name: numero_dia_semana
+        description: "Número do dia dentro da semana."
+
+      - name: dia_mes
+        description: "Número do dia dentro do mês."
+
+      - name: dia_ano
+        description: "Número do dia dentro do ano."
+
+      - name: semana_ano
+        description: "Número da semana dentro do ano."
+
+      - name: nome_mes
+        description: "Nome do mês em inglês."
+
+      - name: numero_mes
+        description: "Número do mês dentro do ano."
+
+      - name: trimestre
+        description: "Número do trimestre do calendário."
+
+      - name: semestre
+        description: "Número do semestre do calendário."
+
+      - name: ano
+        description: "Ano do calendário."
+
+      - name: trimestre_fiscal
+        description: "Número do trimestre fiscal."
+
+      - name: semestre_fiscal
+        description: "Número do semestre fiscal."
+
+      - name: ano_fiscal
+        description: "Ano fiscal."
+
+  - name: stg_dim_geography
+    description: >
+      Staging da dimensão geográfica do AdventureWorks.
+      Contém informações de localização dos clientes e sua
+      associação com o território de vendas.
+
+    columns:
+
+      - name: geografia_id
+        description: "Identificador único da localização geográfica."
+        data_tests:
+          - not_null
+          - unique
+
+      - name: cidade
+        description: "Nome da cidade correspondente à localização geográfica."
+
+      - name: estado
+        description: "Nome do estado ou província correspondente à localização."
+
+      - name: pais_regiao
+        description: "Nome do país ou região correspondente à localização."
+
+      - name: codigo_postal
+        description: "Código postal da localização."
+
+      - name: territorio_vendas_id
+        description: "Identificador do território de vendas associado à localização."
+
+  - name: stg_dim_product_category
+    description: >
+      Staging da dimensão de categorias de produtos do AdventureWorks.
+      Contém as categorias utilizadas para classificação dos produtos.
+
+    columns:
+
+      - name: categoria_id
+        description: "Identificador único da categoria de produto."
+        data_tests:
+          - not_null
+          - unique
+
+      - name: categoria_id_alternativo
+        description: "Código alternativo da categoria de produto."
+
+      - name: categoria
+        description: "Nome da categoria de produto em inglês."
+
+
+  - name: stg_dim_product_subcategory
+    description: >
+      Staging da dimensão de subcategorias de produtos do AdventureWorks.
+      Contém as subcategorias e sua associação com as categorias
+      correspondentes.
+
+    columns:
+
+      - name: subcategoria_id
+        description: "Identificador único da subcategoria."
+        data_tests:
+          - not_null
+          - unique
+
+      - name: subcategoria_id_alternativo
+        description: "Código alternativo da subcategoria de produto."
+
+      - name: subcategoria
+        description: "Nome da subcategoria de produto em inglês."
+
+      - name: categoria_id
+        description: "Identificador da categoria à qual a subcategoria pertence."
+        data_tests:
+          - not_null
+          - relationships:
+              to: ref('stg_dim_product_category')
+              field: categoria_id
+
+  - name: stg_dim_product
+    description: >
+      Staging da dimensão de produtos do AdventureWorks.
+      Contém informações de identificação, classificação,
+      características físicas, preços, estoque, fabricação,
+      descrição e período de vigência dos produtos.
+
+    columns:
+
+      - name: produto_id
+        description: "Identificador único do produto."
+        data_tests:
+          - not_null
+          - unique
+
+      - name: produto_id_alternativo
+        description: "Código alternativo ou SKU do produto."
+
+      - name: subcategoria_id
+        description: "Identificador da subcategoria associada ao produto."
+        data_tests:
+          - relationships:
+              to: ref('stg_dim_product_subcategory')
+              field: subcategoria_id
+
+      - name: codigo_unidade_peso
+        description: "Código da unidade de medida utilizada para o peso."
+
+      - name: codigo_unidade_tamanho
+        description: "Código da unidade de medida utilizada para o tamanho."
+
+      - name: produto
+        description: "Nome comercial do produto em inglês."
+
+      - name: produto_espanhol
+        description: "Nome comercial do produto em espanhol."
+
+      - name: custo_padrao
+        description: "Custo padrão de fabricação ou aquisição do produto."
+
+      - name: produto_acabado
+        description: "Indicador que informa se o produto é acabado e está pronto para venda."
+
+      - name: cor
+        description: "Cor do produto."
+
+      - name: nivel_estoque_seguranca
+        description: "Quantidade mínima de estoque de segurança do produto."
+
+      - name: ponto_reposicao
+        description: "Nível de estoque que indica o ponto de reposição."
+
+      - name: preco_lista
+        description: "Preço de tabela sugerido para venda do produto."
+
+      - name: tamanho
+        description: "Tamanho ou dimensão do produto."
+
+      - name: faixa_tamanho
+        description: "Faixa de tamanho associada ao produto."
+
+      - name: peso
+        description: "Peso do produto."
+
+      - name: dias_fabricacao
+        description: "Número de dias necessários para fabricar o produto."
+
+      - name: linha_produto
+        description: "Linha à qual o produto pertence."
+
+      - name: preco_revendedor
+        description: "Preço do produto destinado a revendedores."
+
+      - name: classe
+        description: "Classe de classificação do produto."
+
+      - name: estilo
+        description: "Estilo ou tipo de design associado ao produto."
+
+      - name: modelo
+        description: "Nome do modelo do produto."
+
+      - name: foto_produto
+        description: "Imagem ou representação visual do produto."
+
+      - name: descricao
+        description: "Descrição detalhada do produto em inglês."
+
+      - name: data_inicio
+        description: "Data de início da vigência do produto no catálogo."
+
+      - name: data_fim
+        description: "Data de encerramento da vigência ou comercialização do produto."
+
+      - name: status
+        description: "Status atual do produto no catálogo."
+
+  - name: stg_fact_internet_sales
+    description: >
+      Staging da tabela fato de vendas pela internet do AdventureWorks.
+      Contém as transações de venda, suas chaves dimensionais,
+      quantidades e principais valores financeiros.
+
+    columns:
+
+      - name: produto_id
+        description: "Identificador do produto vendido."
+        data_tests:
+          - not_null
+          - relationships:
+              to: ref('stg_dim_product')
+              field: produto_id
+
+      - name: data_pedido_id
+        description: "Identificador da data em que o pedido foi realizado."
+        data_tests:
+          - not_null
+          - relationships:
+              to: ref('stg_dim_date')
+              field: data_id
+
+      - name: data_vencimento_id
+        description: "Identificador da data de vencimento do pedido."
+        data_tests:
+          - not_null
+          - relationships:
+              to: ref('stg_dim_date')
+              field: data_id
+
+      - name: data_envio_id
+        description: "Identificador da data de envio do pedido."
+        data_tests:
+          - not_null
+          - relationships:
+              to: ref('stg_dim_date')
+              field: data_id
+
+      - name: cliente_id
+        description: "Identificador do cliente associado à venda."
+        data_tests:
+          - not_null
+          - relationships:
+              to: ref('stg_dim_customer')
+              field: cliente_id
+
+      - name: promocao_id
+        description: "Identificador da promoção aplicada à venda."
+
+      - name: moeda_id
+        description: "Identificador da moeda utilizada na transação."
+
+      - name: territorio_vendas_id
+        description: "Identificador do território de vendas."
+
+      - name: pedido_id
+        description: "Número identificador do pedido de venda."
+
+      - name: linha_pedido_id
+        description: "Número da linha do item dentro do pedido."
+
+      - name: quantidade
+        description: "Quantidade de produtos vendidos."
+
+      - name: preco_unitario
+        description: "Preço unitário do produto."
+
+      - name: valor_bruto
+        description: "Valor total da venda antes da aplicação dos descontos."
+
+      - name: percentual_desconto
+        description: "Percentual de desconto aplicado ao produto."
+
+      - name: valor_desconto
+        description: "Valor monetário do desconto."
+
+      - name: custo_padrao_produto
+        description: "Custo padrão unitário do produto no momento da venda."
+
+      - name: custo_total_produto
+        description: "Custo total dos produtos vendidos."
+
+      - name: valor_venda
+        description: "Valor total da venda."
+
+      - name: valor_imposto
+        description: "Valor do imposto associado à venda."
+
+      - name: valor_frete
+        description: "Valor do frete associado à venda."

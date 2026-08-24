@@ -1,0 +1,220 @@
+version: 2
+
+sources:
+  - name: adventureworks
+    schema: dbo
+    description: "Dados de origem do AdventureWorksDW2022 utilizados para transformação e modelagem analítica."
+
+    tables:
+      - name: FactInternetSales
+        description: "Tabela de fatos contendo as transações de vendas realizadas pela internet."
+
+        columns:
+          - name: ProductKey
+            description: "Identificador único do produto."
+          - name: OrderDateKey
+            description: "Chave da data em que o pedido foi realizado."
+          - name: DueDateKey
+            description: "Chave da data de vencimento do pedido."
+          - name: ShipDateKey
+            description: "Chave da data de envio do pedido."
+          - name: CustomerKey
+            description: "Identificador único do cliente."
+          - name: PromotionKey
+            description: "Identificador da promoção aplicada à venda."
+          - name: CurrencyKey
+            description: "Identificador da moeda utilizada na transação."
+          - name: SalesTerritoryKey
+            description: "Identificador do território de vendas."
+          - name: SalesOrderNumber
+            description: "Número identificador do pedido de venda."
+          - name: SalesOrderLineNumber
+            description: "Número da linha do item dentro do pedido."
+          - name: OrderQuantity
+            description: "Quantidade de produtos vendidos."
+          - name: UnitPrice
+            description: "Preço unitário do produto."
+          - name: ExtendedAmount
+            description: "Valor total antes da aplicação de descontos."
+          - name: UnitPriceDiscountPct
+            description: "Percentual de desconto aplicado ao produto."
+          - name: DiscountAmount
+            description: "Valor monetário do desconto."
+          - name: ProductStandardCost
+            description: "Custo padrão unitário do produto."
+          - name: TotalProductCost
+            description: "Custo total dos produtos vendidos."
+          - name: SalesAmount
+            description: "Valor total da venda."
+          - name: TaxAmt
+            description: "Valor do imposto associado à venda."
+          - name: Freight
+            description: "Valor do frete associado à venda."
+
+      - name: DimCustomer
+        description: "Tabela contendo dados cadastrais e demográficos dos clientes."
+
+        columns:
+          - name: CustomerKey
+            description: "Identificador único do cliente."
+          - name: CustomerAlternateKey
+            description: "Identificador alternativo ou código de negócio do cliente."            
+          - name: MiddleName
+            description: "Nome do meio do cliente."          
+          - name: FirstName
+            description: "Primeiro nome do cliente."
+          - name: LastName
+            description: "Sobrenome do cliente."
+          - name: BirthDate
+            description: Data de nascimento do cliente.
+          - name: MaritalStatus
+            description: "Estado civil do cliente."
+          - name: EmailAddress
+            description: Endereço de e-mail do cliente.     
+          - name: Phone
+            description: Número de telefone do cliente.                   
+          - name: Gender
+            description: "Gênero do cliente."
+          - name: AddressLine1
+            description: Primeira linha do endereço residencial.
+          - name: AddressLine2
+            description: Segunda linha do endereço residencial.            
+          - name: GeographyKey
+            description: "Chave de relacionamento com a dimensão geográfica."
+
+
+      - name: DimGeography
+        description: "Tabela contendo informações geográficas relacionadas aos clientes."
+
+        columns:
+          - name: GeographyKey
+            description: "Identificador único da localização geográfica."
+          - name: City
+            description: "Nome da cidade associada à localização geográfica."            
+          - name: StateProvinceName
+            description: "Nome do estado ou província."
+          - name: PostalCode
+            description: "Código postal associado à localização geográfica."            
+          - name: EnglishCountryRegionName
+            description: "Nome do país ou região em inglês."
+          - name: SalesTerritoryKey
+            description: "Identificador do território de vendas associado à localização."            
+
+
+      - name: DimDate
+        description: "Dimensão de datas utilizada para análises temporais e períodos fiscais."
+
+        columns:
+        - name: DateKey
+          description: "Identificador numérico único da data."
+        - name: FullDateAlternateKey
+          description: "Data completa correspondente ao registro."
+        - name: DayNumberOfWeek
+          description: "Número do dia dentro da semana."
+        - name: EnglishDayNameOfWeek
+          description: "Nome do dia da semana em inglês."
+        - name: DayNumberOfMonth
+          description: "Número do dia dentro do mês."
+        - name: DayNumberOfYear
+          description: "Número do dia dentro do ano."
+        - name: WeekNumberOfYear
+          description: "Número da semana dentro do ano."
+        - name: EnglishMonthName
+          description: "Nome do mês em inglês."
+        - name: MonthNumberOfYear
+          description: "Número do mês dentro do ano."
+        - name: CalendarQuarter
+          description: "Número do trimestre do calendário."
+        - name: CalendarSemester
+          description: "Número do semestre do calendário."
+        - name: CalendarYear
+          description: "Ano do calendário."
+        - name: FiscalQuarter
+          description: "Número do trimestre fiscal."
+        - name: FiscalSemester
+          description: "Número do semestre fiscal."
+        - name: FiscalYear
+          description: "Ano fiscal."
+
+
+      - name: DimProduct
+        description: "Dimensão de produtos contendo informações de identificação, classificação, especificações físicas, preços, estoque, fabricação e vigência dos produtos."
+
+        columns:
+        - name: ProductKey
+          description: "Código identificador interno e único do produto."
+        - name: ProductAlternateKey
+          description: "Código alternativo ou SKU do produto."
+        - name: ProductSubcategoryKey
+          description: "Chave da subcategoria associada ao produto."
+        - name: WeightUnitMeasureCode
+          description: "Código da unidade de medida utilizada para o peso do produto."
+        - name: SizeUnitMeasureCode
+          description: "Código da unidade de medida utilizada para o tamanho do produto."
+        - name: EnglishProductName
+          description: "Nome comercial do produto em inglês."
+        - name: SpanishProductName
+          description: "Nome comercial do produto em espanhol."
+        - name: StandardCost
+          description: "Custo padrão de fabricação ou aquisição do produto."
+        - name: FinishedGoodsFlag
+          description: "Indicador que informa se o produto é um produto acabado pronto para venda."
+        - name: Color
+          description: "Cor do produto."
+        - name: SafetyStockLevel
+          description: "Quantidade mínima de estoque de segurança do produto."
+        - name: ReorderPoint
+          description: "Quantidade ou nível que indica o ponto de reposição do produto."
+        - name: ListPrice
+          description: "Preço de tabela sugerido para venda do produto."
+        - name: Size
+          description: "Tamanho ou dimensão do produto."
+        - name: SizeRange
+          description: "Faixa de tamanhos associada ao produto."
+        - name: Weight
+          description: "Peso do produto."
+        - name: DaysToManufacture
+          description: "Número de dias necessários para fabricar o produto."
+        - name: ProductLine
+          description: "Linha à qual o produto pertence."
+        - name: DealerPrice
+          description: "Preço do produto destinado a revendedores."
+        - name: Class
+          description: "Classe de classificação do produto."
+        - name: Style
+          description: "Estilo ou tipo de design associado ao produto."
+        - name: ModelName
+          description: "Nome do modelo do produto."
+        - name: LargePhoto
+          description: "Imagem ou representação visual do produto."
+        - name: EnglishDescription
+          description: "Descrição detalhada do produto em inglês."
+        - name: StartDate
+          description: "Data de início da vigência do produto no catálogo."
+        - name: EndDate
+          description: "Data de encerramento da vigência ou comercialização do produto."
+        - name: Status
+          description: "Status atual do produto no catálogo."
+
+      - name: DimProductSubcategory
+        description: "Tabela contendo as subcategorias dos produtos."
+        columns:
+          - name: ProductSubcategoryKey
+            description: "Identificador único da subcategoria."
+          - name: ProductCategoryKey
+            description: "Chave da categoria do produto."
+          - name: EnglishProductSubcategoryName
+            description: "Nome da subcategoria em inglês."
+          - name: ProductSubcategoryAlternateKey
+            description: "Identificador alternativo da subcategoria do produto."            
+
+
+      - name: DimProductCategory
+        description: "Tabela contendo as categorias dos produtos."
+        columns:
+          - name: ProductCategoryKey
+            description: "Identificador único da categoria."
+          - name: EnglishProductCategoryName
+            description: "Nome da categoria em inglês."
+          - name: ProductCategoryAlternateKey
+            description: "Identificador alternativo da categoria do produto."            
