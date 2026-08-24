@@ -74,6 +74,10 @@ Esses modelos representam estruturas como:
 - Modelos preparados para análise no Power BI.
 - Documentação dos Modelos
 
+Abaixo podemos conferir esquema utilizado para análise de dados no PowerBI:
+
+![](/data_visualization/images/fluxo_data_visualization.png)
+
 Abaixo podemos conferir a linhagem de dados, desde os dados brutos, tratamento e transformação até as regras de negócios:
 
 ![](/data_visualization/images/data_lineage.png)
