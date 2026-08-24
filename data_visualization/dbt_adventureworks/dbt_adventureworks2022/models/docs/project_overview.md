@@ -13,23 +13,17 @@ O desenvolvimento foi dividido em quatro etapas principais:
 ### 1. 🔄 Restauração
 Restauração do banco de dados legado **AdventureWorksDW2022** em uma infraestrutura gerenciada na Azure SQL Server.
 
-➡️ <strong><a href="https://github.com/userdanixdev/azure-adventureworks" target="_blank">
-Acessar documentação da Restauração
-</a></strong>
+➡️ **[Acessar documentação da Restauração](https://github.com/userdanixdev/azure-adventureworks)**
 
 ### 2. ☁️ Migração
 Planejamento e execução da migração para um recurso Azure mais adequado ao projeto, considerando **recursos disponíveis, escalabilidade e custo-benefício**.
 
-➡️ <strong><a href="https://github.com/userdanixdev/azure-adventureworks/tree/migration-azure-database" target="_blank">
-Acessar documentação da Migração
-</a></strong>
+➡️ **[Acessar documentação da Migração](https://github.com/userdanixdev/azure-adventureworks/tree/migration-azure-database)**
 
 ### 3. ⚙️ Transformação
 Utilização do **dbt** para transformação, organização e modelagem dos dados, incluindo documentação e testes dos modelos analíticos.
 
-➡️ <strong><a href="https://github.com/userdanixdev/azure-adventureworks/tree/data-visualization" target="_blank">
-Acessar documentação da Transformação
-</a></strong>
+➡️ **[Acessar documentação do dbt](https://github.com/userdanixdev/azure-adventureworks/tree/data-visualization)**
 
 ### 4. 📈 Análise
 Construção da camada analítica e disponibilização dos dados para análise e visualização utilizando **Power BI**.
