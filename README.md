@@ -232,27 +232,9 @@ O processo foi desenvolvido de forma modular, utilizando **Python e T-SQL**, per
 
 O fluxo da migração segue as seguintes etapas:
 
-```text
-Azure SQL Managed Instance
-        │
-        ▼
-   Inventário do Banco
-        │
-        ▼
-   Plano de Migração
-        │
-        ▼
- Análise e Geração do Schema
-        │
-        ▼
- Deploy no Azure SQL Database
-        │
-        ▼
-   Carregamento dos Dados
-        │
-        ▼
-  Validação da Migração
-```
+![](/images/fluxo_migration.png)
+
+
 [Clique aqui para ver os códigos plano de migração](https://github.com/userdanixdev/azure-adventureworks/tree/migration-azure-database/migration)
 
 *Os scripts desta pasta fazem parte da evolução do projeto, permitindo compreender e controlar cada etapa da migração entre os serviços Azure.*
@@ -268,5 +250,5 @@ Azure SQL Managed Instance
 
 ↩️ [Voltar para o plano de Restauração - SQL Server - Azure](https://github.com/userdanixdev/azure-adventureworks)
 
-➡️ [Seguir para documentação e visualização BI](https://github.com/userdanixdev/azure-adventureworks/tree/data-visualization)
+➡️ [Seguir para Documentação e Visualização BI](https://github.com/userdanixdev/azure-adventureworks/tree/data-visualization)
 
