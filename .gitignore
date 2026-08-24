@@ -22,4 +22,5 @@ ENV/
 *.mdf
 *.ndf
 *.ldf
+target/
 
