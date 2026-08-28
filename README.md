@@ -22,11 +22,7 @@ O projeto demonstra um fluxo completo de dados, desde a disponibilização do da
 
 Os modelos analíticos resultantes são organizados em camadas de staging e marts, servindo como base para a próxima etapa do projeto: a construção de uma solução de Business Intelligence utilizando Microsoft Power BI.
 
-### Objetivo:
-
-O objetivo desta etapa é transformar os dados armazenados no Azure SQL Database em uma estrutura analítica preparada para consumo por ferramentas de Business Intelligence.
-
-O projeto contempla:
+**O Data Visualization contempla:**
 
 * Transformação e padronização dos dados utilizando dbt;
 * Organização dos modelos em camadas de staging e marts;
@@ -78,7 +74,7 @@ Abaixo podemos conferir esquema utilizado para análise de dados no PowerBI:
 
 ![](/data_visualization/images/fluxo_data_visualization.png)
 
-Abaixo podemos conferir a linhagem de dados, desde os dados brutos, tratamento e transformação até as regras de negócios:
+Abaixo podemos também conferir a linhagem de dados, desde os dados brutos, tratamento e transformação até as regras de negócios:
 
 ![](/data_visualization/images/data_lineage.png)
 
@@ -109,11 +105,7 @@ A documentação permite explorar:
 
 🔗 A documentação se encontra logo abaixo:
 
-➡️ [GITHUB PAGES - AdventureWorksDW2022](https://userdanixdev.github.io/azure-adventureworks/#!/overview)
-
-
----
-↩️ [Voltar para o plano de Migração - Azure](https://github.com/userdanixdev/azure-adventureworks/tree/migration-azure-database)
-
-↩️ [Voltar para o plano de Restauração - SQL Server - Azure](https://github.com/userdanixdev/azure-adventureworks)
+- ➡️ [GITHUB PAGES - AdventureWorksDW2022](https://userdanixdev.github.io/azure-adventureworks/#!/overview)
+- ↩️ [Voltar para o plano de Migração - Azure](https://github.com/userdanixdev/azure-adventureworks/tree/migration-azure-database)
+- ↩️ [Voltar para o plano de Restauração - SQL Server - Azure](https://github.com/userdanixdev/azure-adventureworks)
 

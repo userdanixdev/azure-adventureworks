@@ -22,7 +22,7 @@ O resultado é uma tabela preparada para responder perguntas como:
 - Quais produtos contribuem mais para o faturamento?
 - Qual categoria ou subcategoria deve receber maior atenção comercial?
 
-> Além disso, essa dimensão pode ser relacionada à tabela fato de vendas através do ProductID, permitindo analisar métricas como quantidade vendida, faturamento, custo e desempenho dos produtos.
+*Além disso, essa dimensão pode ser relacionada à tabela fato de vendas através do ProductID, permitindo analisar métricas como quantidade vendida, faturamento, custo e desempenho dos produtos.*
 
 
 ---

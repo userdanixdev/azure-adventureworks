@@ -17,7 +17,7 @@ INNER JOIN DimProduct AS p
 INNER JOIN DimCustomer AS c
     ON fis.CustomerKey = c.CustomerKey
 WHERE
-    d.CalendarYear IN (2013,2014)                
+    d.CalendarYear IN (2011,2012)                
 
 -- 1.Inner Join com DimDate:
 --A FactInternetSales possui a chave da data do pedido.

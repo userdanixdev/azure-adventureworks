@@ -6,11 +6,7 @@ A tabela **marts_d_date** é uma dimensão analítica de calendário utilizada c
 
 Seu objetivo é centralizar atributos relacionados às datas, facilitando análises temporais e permitindo que as métricas sejam avaliadas por mês e ano.
 
----
-
-## 🎯 Objetivo
-
-O resultado é uma tabela preparada para responder perguntas como:
+*O resultado é uma tabela preparada para responder perguntas como:*
 
 - Como as vendas evoluíram ao longo dos meses?
 - Qual mês apresentou o maior volume de vendas?
@@ -68,8 +64,8 @@ O campo de data completa não pode possuir valores nulos.
 
 O campo `ano` não pode possuir valores nulos e está restrito aos valores:
 
+- `2012`
 - `2013`
-- `2014`
 
 Essas validações garantem consistência na utilização da dimensão como referência temporal para o modelo analítico.
 

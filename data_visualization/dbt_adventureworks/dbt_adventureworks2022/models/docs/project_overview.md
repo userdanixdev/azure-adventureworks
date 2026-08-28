@@ -6,7 +6,7 @@ Este projeto apresenta a construção de um **pipeline analítico completo**, pa
 
 O projeto utiliza **Azure SQL**, **dbt** e **Power BI** para estruturar os dados relacionais em uma camada analítica organizada, documentada e testada, preparada para consumo por ferramentas de Business Intelligence.
 
-## 🔄 Etapas do projeto
+## Etapas do projeto
 
 O desenvolvimento foi dividido em quatro etapas principais:
 
@@ -29,31 +29,18 @@ Utilização do **dbt** para transformação, organização e modelagem dos dado
 Construção da camada analítica e disponibilização dos dados para análise e visualização utilizando **Power BI**.
 
 ➡️ **[Acessar análise no Power BI](LINK)**
+➡️ **[Acesso ao relatório](LINK)**
 
 ---
 
-## 🎯 Objetivo
+**O pipeline está organizado nas seguintes camadas:**
 
-Construir um pipeline analítico seguindo uma arquitetura inovadora e desafiadora. Separando as responsabilidades em diferentes camadas de transformação.
-
-O projeto permite:
-
-- transformação e padronização dos dados de origem
-- criação de modelos de staging
-- construção de dimensões e fatos
-- aplicação de testes de qualidade
-- documentação das fontes e modelos
-- rastreabilidade das transformações
-- disponibilização dos dados para análises e BI
-
-O pipeline está organizado nas seguintes camadas:
-
-### 🟠 Source — Dados de Origem
+### 🟠 Source - Dados de Origem
 
 Os dados são provenientes do banco **AdventureWorksDW2022** hospedado
 no Azure SQL Database.
 
-As tabelas originais são declaradas no dbt por meio de `sources`,
+As tabelas originais são declaradas no dbt por meio de **sources**,
 permitindo rastreabilidade entre os dados de origem e os modelos
 transformados.
 
@@ -61,7 +48,7 @@ transformados.
 
 A camada de staging representa a primeira etapa de transformação.
 
-Nesta camada são realizadas operações como:
+Nesta camada são realizadas operações de:
 
 - seleção das colunas necessárias
 - padronização dos nomes
@@ -83,7 +70,6 @@ Exemplos:
 ### 🟣 Marts
 
 A camada de marts contém os modelos destinados ao consumo analítico.
-
 Nesta camada são construídas as dimensões e fatos utilizados pelas análises
 de negócio.
 
@@ -93,7 +79,7 @@ Exemplos:
 - `marts_d_produtos`
 - `marts_f_vendas`
 
-Os modelos são estruturados para facilitar o consumo por ferramentas de BI e consultas analíticas.
+*Os modelos são estruturados para facilitar o consumo por ferramentas de BI e consultas analíticas.*
 
 ## 🧩 Modelagem Dimensional
 
@@ -103,7 +89,7 @@ A modelagem segue princípios de **Data Warehouse** e **Star Schema**.
 
 As dimensões armazenam atributos descritivos utilizados para análise, segmentação e filtragem.
 
-Principais dimensões:
+As principais dimensões são:
 
 - Cliente
 - Produto
@@ -116,9 +102,7 @@ A principal tabela fato utilizada no projeto é:
 
 - Internet Sales ( Vendas )
 
-*Ela permite análises relacionadas a vendas, produtos, clientes, territórios e demais dimensões relacionadas.*
-
-> Essa separação facilita a organização, manutenção e governança do ambiente de dados.
+*Ela permite análises relacionadas a vendas, produtos, clientes, territórios e demais dimensões relacionadas.Essa separação facilita a organização, manutenção e governança do ambiente de dados.*
 
 ## 🧪 Qualidade dos Dados
 
@@ -131,7 +115,7 @@ Entre os testes utilizados estão:
 - `relationships`
 - `accepted_values`
 
-Esses testes ajudam a identificar problemas de integridade referencial, duplicidade e valores inválidos antes que os dados sejam disponibilizados para consumo analítico.
+*Esses testes ajudam a identificar problemas de integridade referencial, duplicidade e valores inválidos antes que os dados sejam disponibilizados para consumo analítico.*
 
 ## 📚 Documentação
 
@@ -161,18 +145,6 @@ A documentação permite visualizar:
 Os modelos finais são preparados para utilização em ferramentas de Business Intelligence.
 
 O Power BI pode consumir as dimensões e fatos produzidos pelo dbt, permitindo a construção de dashboards e análises sobre vendas, clientes, produtos e geografia.
-
-## 🚀 Benefícios
-
-- Separação clara entre origem, transformação e consumo
-- Padronização dos modelos
-- Testes automatizados de qualidade
-- Rastreabilidade dos dados
-- Documentação centralizada
-- Modelagem dimensional
-- Estrutura preparada para BI
-- Versionamento do código com Git
-- Maior facilidade de manutenção e evolução
 
 ## 🔗 :
 

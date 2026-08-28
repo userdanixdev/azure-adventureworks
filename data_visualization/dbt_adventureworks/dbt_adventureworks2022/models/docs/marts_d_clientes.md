@@ -2,7 +2,7 @@
 
 # 👤 Dimensão de Clientes
 
-A `marts_d_clientes` representa a dimensão de clientes do modelo analítico do AdventureWorksDW2022.
+A *marts_d_clientes* representa a dimensão de clientes do modelo analítico do AdventureWorksDW2022.
 
 Seu objetivo é disponibilizar os principais atributos cadastrais dos clientes para análises de vendas, comportamento e segmentação.
 

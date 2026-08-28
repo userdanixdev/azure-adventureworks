@@ -8,81 +8,9 @@ O objetivo é transformar os dados em **informações estratégicas para anális
 
 O dashboard foi estruturado em **cinco páginas analíticas**, cada uma com um objetivo específico.
 
+➡️ [Link da publicação do relatório](/data_visualization/docs/boas_praticas.md)
+
 ---
-
-# 🗂️ Estrutura do Dashboard
-
-Boas práticas foram aplicadas em todas as etapas de construção do dashboard, incluindo a preparação e organização dos dados no Power Query, a modelagem dimensional seguindo o esquema estrela, a criação de métricas em DAX e a implementação de recursos de interatividade. A estrutura do projeto também foi organizada para facilitar a manutenção, reutilização e escalabilidade da solução.
-
-## 1. Organização no Power Query
-
-Os processos de transformação foram organizados em pastas, separando tabelas de dimensão e fato. Foram criados parâmetros para centralizar as informações de conexão, como caminho do servidor e nome do banco de dados. Essa abordagem evita valores fixos nas consultas e facilita futuras alterações no ambiente de dados. Também foram utilizados os parâmetros RangeStart e RangeEnd, seguindo as boas práticas para definição de períodos e preparação do modelo para recursos como atualização incremental no Power BI.
-
-![](../images/boas_praticas_power_query.png)
-
-## 2. Modelagem Dimensional
-
-O modelo de dados foi estruturado seguindo o esquema estrela, separando a tabela fato das tabelas dimensão e estabelecendo relacionamentos adequados entre elas. Essa abordagem contribui para uma modelagem mais organizada, melhor desempenho e maior facilidade na criação de análises e métricas.
-
-![](../images/schema_star.png)
-
-## 3. Interatividade e Experiência do Usuário
-
-Foram implementados recursos de interatividade para permitir a exploração dos dados de forma dinâmica, utilizando filtros, segmentações e interações entre os visuais. Dessa forma, o usuário pode analisar os indicadores sob diferentes perspectivas e períodos.
-
-## 1️⃣ Visão Geral Financeira
-
-Fornecer uma visão rápida e consolidada dos principais indicadores financeiros do negócio.
-
-Esta página funciona como o ponto de entrada do dashboard, permitindo que o usuário tenha uma compreensão imediata da situação financeira e da evolução dos principais resultados.
-
-### 📈 Principais Métricas
-
-* Receita Total:
-
-```m
-Receita = SUM(marts_f_vendas[receita])
-```
-* Custo Total:
-
-```m
-Custo = SUM(marts_f_vendas[custo_produto])
-```
-
-* Lucro Total:
-
-```m
-Lucro = SUM(marts_f_vendas[lucro_apos_frete_imposto])
-```
-* Lucro Bruto Total:
-
-```m
-Lucro Bruto = SUM(marts_f_vendas[lucro_bruto])
-```
-
-* Margem de Lucro Bruta:
-
-```m
-Margem Bruta = DIVIDE([Lucro Bruto],[Receita])
-```
-
-* Margem de Lucro Líquida:
-```m
-Margem = DIVIDE([Lucro],[Receita])
-```
-
-* Número de Pedidos ou Transações:
-```m
-Transações = DISTINCTCOUNT(marts_f_vendas[venda_id])
-```
-
-
-### 📊 Visuais
-
-* **Cards** para apresentação dos principais KPIs.
-* **Gráfico de Linha** para acompanhar a evolução temporal da receita.
-* **Indicadores de variação** para demonstrar crescimento ou redução em relação ao período anterior.
-
 ### 🔎 Insights:
 
 * Evolução da receita ao longo do tempo.
@@ -244,9 +172,10 @@ Com isso, o projeto consolida conhecimentos em:
 
 ---
 
-Link Github Pages: Documentação DBT
-Link Dashboard
-Link repositorio Minhan pagina
-Link Inicial do projeto
-Link linkedin
+- ➡️ [Acesse as Boas Práticas Aplicadas](/data_visualization/docs/boas_praticas.md)
+- ➡️ [Acesse aos insights realizados](/data_visualization/docs/insights.md)
+- ➡️ [Acesse as perguntas de negócios](/data_visualization/docs/perguntas_negocios.md)
+- [Acesse a última atulização do Projeto](release tal)
+- ↩️ [Volte para Data-Visualization #2](/data_visualization/README.md)
+
 
