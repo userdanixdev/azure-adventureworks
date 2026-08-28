@@ -45,11 +45,7 @@ data_visualization/
 🔗 A preparação se encontra logo abaixo:
 
 - ➡️ [GitHub Pages - AdventureWorksDW2022](https://userdanixdev.github.io/azure-adventureworks/#!/overview)
-
 Caso queira acessar para a página principal é só clicar aqui abaixo:
-
 - ➡️ [README.md - Principal - Data Visualization #1](https://github.com/userdanixdev/azure-adventureworks/tree/data-visualization)
-
 Caso queira acessar as boas práticas, insights e perguntas de negócios aplicadas:
-
 - ➡️ [README.md - Power BI](/data_visualization/powerbi/README.md)

@@ -70,11 +70,7 @@ Esses modelos representam estruturas como:
 - Modelos preparados para análise no Power BI.
 - Documentação dos Modelos
 
-Abaixo podemos conferir esquema utilizado para análise de dados no PowerBI:
-
-![](/data_visualization/images/fluxo_data_visualization.png)
-
-Abaixo podemos também conferir a linhagem de dados, desde os dados brutos, tratamento e transformação até as regras de negócios:
+Abaixo podemos conferir a linhagem de dados, desde os dados brutos, tratamento e transformação até as regras de negócios:
 
 ![](/data_visualization/images/data_lineage.png)
 
@@ -106,6 +102,7 @@ A documentação permite explorar:
 🔗 A documentação se encontra logo abaixo:
 
 - ➡️ [GITHUB PAGES - AdventureWorksDW2022](https://userdanixdev.github.io/azure-adventureworks/#!/overview)
+- ➡️ [README.md - Data Visuzaliation #2](/data_visualization/README.md)
 - ↩️ [Voltar para o plano de Migração - Azure](https://github.com/userdanixdev/azure-adventureworks/tree/migration-azure-database)
 - ↩️ [Voltar para o plano de Restauração - SQL Server - Azure](https://github.com/userdanixdev/azure-adventureworks)
 
