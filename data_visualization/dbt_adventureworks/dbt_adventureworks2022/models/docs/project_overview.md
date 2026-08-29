@@ -28,8 +28,8 @@ Utilização do **dbt** para transformação, organização e modelagem dos dado
 ### 4. 📈 Análise
 Construção da camada analítica e disponibilização dos dados para análise e visualização utilizando **Power BI**.
 
-➡️ **[Acessar análise no Power BI](LINK)**
-➡️ **[Acesso ao relatório](LINK)**
+➡️ **[Acessar análises do Power BI]((https://app.powerbi.com/view?r=eyJrIjoiZmFiMWE4YWItNmM5Yi00ZDE3LWEzYWUtYzlmYmJlYjAwZGNiIiwidCI6ImVkNTJhZDViLTU0YzktNDNlZi04YmNhLThlOWY4Y2U0Zjc1ZiJ9))**
+➡️ **[Acesso ao relatório]((https://app.powerbi.com/view?r=eyJrIjoiZmFiMWE4YWItNmM5Yi00ZDE3LWEzYWUtYzlmYmJlYjAwZGNiIiwidCI6ImVkNTJhZDViLTU0YzktNDNlZi04YmNhLThlOWY4Y2U0Zjc1ZiJ9))**
 
 ---
 
@@ -148,12 +148,8 @@ O Power BI pode consumir as dimensões e fatos produzidos pelo dbt, permitindo a
 
 ## 🔗 :
 
-➡️ <strong><a href="https://github.com/userdanixdev" target="_blank">
-GitHub — DanixDev
-</a></strong>
+➡️ [Página do Linkedin](www.linkedin.com/in/danixdev)
 
-➡️ <strong><a href="https://www.linkedin.com/in/danixdev" target="_blank">
-LinkedIn — DanixDev
-</a></strong>
+➡️ [Página do GitHub - Segue lá](https://github.com/userdanixdev)
 
 {% enddocs %}
