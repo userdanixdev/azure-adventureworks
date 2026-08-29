@@ -86,14 +86,6 @@ Explorar o desempenho financeiro por **produto, subcategoria e categoria**, perm
 * **Treemap ou Gráfico de Barras** para identificar produtos e categorias com maior participação.
 * **Matriz Interativa** com capacidade de **drill-down** entre:
 
-```text
-Categoria
-   ↓
-Subcategoria
-   ↓
-Produto
-```
-
 ### 🔎 Insights:
 
 * Produtos mais rentáveis.
@@ -133,7 +125,7 @@ Analisar o desempenho financeiro segmentado por clientes e regiões, identifican
 
 ---
 
-# 🔗 Navegação e Interatividade
+## 🔗 Navegação e Interatividade
 
 O dashboard será estruturado para proporcionar uma experiência analítica e interativa.
 
@@ -146,11 +138,9 @@ Entre os principais recursos utilizados estão:
 * Navegação entre páginas.
 * Comparação dinâmica entre períodos.
 
-# 🏗️ Fluxo Analítico do Projeto
-
 ---
 
-# 🚀 Resultado:
+## 🚀 Resultado:
 
 Ao final do projeto, o dashboard deverá fornecer uma visão completa do desempenho financeiro e comercial da base **AdventureWorksDW2022**, permitindo análises desde uma visão executiva de alto nível até o detalhamento por produto, categoria, cliente e região.
 
@@ -169,6 +159,7 @@ Com isso, o projeto consolida conhecimentos em:
 * 📈 Power BI
 * 🧑‍💻 Git e GitHub
 * 📚 Documentação Técnica
+* 🔗 GitHub Pages
 
 ---
 
@@ -177,5 +168,8 @@ Com isso, o projeto consolida conhecimentos em:
 - ➡️ [Acesse as perguntas de negócios](/data_visualization/docs/perguntas_negocios.md)
 - [Acesse a última atulização do Projeto](release tal)
 - ↩️ [Volte para Data-Visualization #2](/data_visualization/README.md)
+- ➡️ [Relatório Power BI](https://app.powerbi.com/view?r=eyJrIjoiZmFiMWE4YWItNmM5Yi00ZDE3LWEzYWUtYzlmYmJlYjAwZGNiIiwidCI6ImVkNTJhZDViLTU0YzktNDNlZi04YmNhLThlOWY4Y2U0Zjc1ZiJ9)
+
+
 
 

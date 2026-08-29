@@ -46,13 +46,8 @@ Com isso, o projeto consolida conhecimentos em:
 - [Insights](/data_visualization/docs/insights.md)
 - [Perguntas de Negócios](/data_visualization/docs/perguntas_negocios.md)
 - [Volte ao README.md do Power BI](/data_visualization/powerbi/README.md)
-- [Link da publicação do relatório]
-- [Link Data-Visualization #2]
-- [Link Data-Visualization #1]
----
+- [Publicação do relatório](https://app.powerbi.com/view?r=eyJrIjoiZmFiMWE4YWItNmM5Yi00ZDE3LWEzYWUtYzlmYmJlYjAwZGNiIiwidCI6ImVkNTJhZDViLTU0YzktNDNlZi04YmNhLThlOWY4Y2U0Zjc1ZiJ9)
+- [Data-Visualization #2](/data_visualization/README.md)
+- [Data-Visualization #1](/README.md)
 
-- Link Github Pages: Documentação DBT
-- Link Dashboard
-- Link repositorio Minhan pagina
-- Link Inicial do projeto
-- Link linkedin
+
