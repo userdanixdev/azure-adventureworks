@@ -8,7 +8,10 @@ O objetivo é transformar os dados em **informações estratégicas para anális
 
 O dashboard foi estruturado em **cinco páginas analíticas**, cada uma com um objetivo específico.
 
-➡️ [Link da publicação do relatório](/data_visualization/docs/boas_praticas.md)
+➡️ [Link da publicação do relatório]- ➡️ [Relatório Power BI](https://app.powerbi.com/view?r=eyJrIjoiZmFiMWE4YWItNmM5Yi00ZDE3LWEzYWUtYzlmYmJlYjAwZGNiIiwidCI6ImVkNTJhZDViLTU0YzktNDNlZi04YmNhLThlOWY4Y2U0Zjc1ZiJ9)
+
+
+
 
 ---
 ### 🔎 Insights:
@@ -166,10 +169,7 @@ Com isso, o projeto consolida conhecimentos em:
 - ➡️ [Acesse as Boas Práticas Aplicadas](/data_visualization/docs/boas_praticas.md)
 - ➡️ [Acesse aos insights realizados](/data_visualization/docs/insights.md)
 - ➡️ [Acesse as perguntas de negócios](/data_visualization/docs/perguntas_negocios.md)
-- [Acesse a última atulização do Projeto](release tal)
+
 - ↩️ [Volte para Data-Visualization #2](/data_visualization/README.md)
-- ➡️ [Relatório Power BI](https://app.powerbi.com/view?r=eyJrIjoiZmFiMWE4YWItNmM5Yi00ZDE3LWEzYWUtYzlmYmJlYjAwZGNiIiwidCI6ImVkNTJhZDViLTU0YzktNDNlZi04YmNhLThlOWY4Y2U0Zjc1ZiJ9)
-
-
 
 

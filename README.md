@@ -102,7 +102,7 @@ A documentação permite explorar:
 🔗 A documentação se encontra logo abaixo:
 
 - ➡️ [GITHUB PAGES - AdventureWorksDW2022](https://userdanixdev.github.io/azure-adventureworks/#!/overview)
-- ➡️ [README.md - Data Visuzaliation #2](/data_visualization/README.md)
+- ➡️ [README.md - Data Visualization #2](/data_visualization/README.md)
 - ➡️ [Relatório Power BI](https://app.powerbi.com/view?r=eyJrIjoiZmFiMWE4YWItNmM5Yi00ZDE3LWEzYWUtYzlmYmJlYjAwZGNiIiwidCI6ImVkNTJhZDViLTU0YzktNDNlZi04YmNhLThlOWY4Y2U0Zjc1ZiJ9)
 - ↩️ [Voltar para o plano de Migração - Azure](https://github.com/userdanixdev/azure-adventureworks/tree/migration-azure-database)
 - ↩️ [Voltar para o plano de Restauração - SQL Server - Azure](https://github.com/userdanixdev/azure-adventureworks)
