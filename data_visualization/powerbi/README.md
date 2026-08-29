@@ -8,10 +8,7 @@ O objetivo é transformar os dados em **informações estratégicas para anális
 
 O dashboard foi estruturado em **cinco páginas analíticas**, cada uma com um objetivo específico.
 
-➡️ [Link da publicação do relatório]- ➡️ [Relatório Power BI](https://app.powerbi.com/view?r=eyJrIjoiZmFiMWE4YWItNmM5Yi00ZDE3LWEzYWUtYzlmYmJlYjAwZGNiIiwidCI6ImVkNTJhZDViLTU0YzktNDNlZi04YmNhLThlOWY4Y2U0Zjc1ZiJ9)
-
-
-
+➡️ [Relatório Power BI](https://app.powerbi.com/view?r=eyJrIjoiZmFiMWE4YWItNmM5Yi00ZDE3LWEzYWUtYzlmYmJlYjAwZGNiIiwidCI6ImVkNTJhZDViLTU0YzktNDNlZi04YmNhLThlOWY4Y2U0Zjc1ZiJ9)
 
 ---
 ### 🔎 Insights:
