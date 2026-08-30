@@ -1,0 +1,56 @@
+{
+    "path_count": 177,
+    "parsed_path_count": 177,
+    "static_analysis_path_count": 11,
+    "static_analysis_parsed_path_count": 11,
+    "is_partial_parse_enabled": false,
+    "is_static_analysis_enabled": true,
+    "read_files_elapsed": 1.1486688000150025,
+    "load_macros_elapsed": 5.2140154000371695,
+    "parse_project_elapsed": 3.3885592001024634,
+    "patch_sources_elapsed": 0.11331740021705627,
+    "process_manifest_elapsed": 0.3477407000027597,
+    "load_all_elapsed": 11.278911399887875,
+    "projects": [
+        {
+            "project_name": "dbt_adventureworks2022",
+            "elapsed": 3.3250574998091906,
+            "parsers": [
+                {
+                    "parser": "model",
+                    "elapsed": 1.0730266999453306,
+                    "parsed_path_count": 11
+                },
+                {
+                    "parser": "doc",
+                    "elapsed": 0.009662600001320243,
+                    "parsed_path_count": 5
+                },
+                {
+                    "parser": "test",
+                    "elapsed": 2.214301100000739,
+                    "parsed_path_count": 4
+                }
+            ],
+            "parsed_path_count": 20
+        },
+        {
+            "project_name": "dbt_sqlserver",
+            "elapsed": 0.029680700041353703,
+            "parsers": [],
+            "parsed_path_count": 0
+        },
+        {
+            "project_name": "dbt",
+            "elapsed": 0.03335089981555939,
+            "parsers": [
+                {
+                    "parser": "doc",
+                    "elapsed": 0.0013234000653028488,
+                    "parsed_path_count": 1
+                }
+            ],
+            "parsed_path_count": 1
+        }
+    ]
+}
