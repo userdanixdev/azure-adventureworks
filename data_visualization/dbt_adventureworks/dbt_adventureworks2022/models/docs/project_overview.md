@@ -28,9 +28,6 @@ Utilização do **dbt** para transformação, organização e modelagem dos dado
 ### 4. 📈 Análise
 Construção da camada analítica e disponibilização dos dados para análise e visualização utilizando **Power BI**.
 
-➡️ **[Acessar análises do Power BI]((https://app.powerbi.com/view?r=eyJrIjoiZmFiMWE4YWItNmM5Yi00ZDE3LWEzYWUtYzlmYmJlYjAwZGNiIiwidCI6ImVkNTJhZDViLTU0YzktNDNlZi04YmNhLThlOWY4Y2U0Zjc1ZiJ9))**
-➡️ **[Acesso ao relatório]((https://app.powerbi.com/view?r=eyJrIjoiZmFiMWE4YWItNmM5Yi00ZDE3LWEzYWUtYzlmYmJlYjAwZGNiIiwidCI6ImVkNTJhZDViLTU0YzktNDNlZi04YmNhLThlOWY4Y2U0Zjc1ZiJ9))**
-
 ---
 
 **O pipeline está organizado nas seguintes camadas:**
@@ -44,7 +41,7 @@ As tabelas originais são declaradas no dbt por meio de **sources**,
 permitindo rastreabilidade entre os dados de origem e os modelos
 transformados.
 
-### 🔵 Staging
+### 🔵 Staging - Intermediária
 
 A camada de staging representa a primeira etapa de transformação.
 
@@ -146,10 +143,13 @@ Os modelos finais são preparados para utilização em ferramentas de Business I
 
 O Power BI pode consumir as dimensões e fatos produzidos pelo dbt, permitindo a construção de dashboards e análises sobre vendas, clientes, produtos e geografia.
 
-## 🔗 :
+---
 
-➡️ [Página do Linkedin](www.linkedin.com/in/danixdev)
+➡️ **[Acessar análises do Power BI]((https://app.powerbi.com/view?r=eyJrIjoiZmFiMWE4YWItNmM5Yi00ZDE3LWEzYWUtYzlmYmJlYjAwZGNiIiwidCI6ImVkNTJhZDViLTU0YzktNDNlZi04YmNhLThlOWY4Y2U0Zjc1ZiJ9))**
+➡️ **[Acesso ao relatório]((https://app.powerbi.com/view?r=eyJrIjoiZmFiMWE4YWItNmM5Yi00ZDE3LWEzYWUtYzlmYmJlYjAwZGNiIiwidCI6ImVkNTJhZDViLTU0YzktNDNlZi04YmNhLThlOWY4Y2U0Zjc1ZiJ9))**
 
-➡️ [Página do GitHub - Segue lá](https://github.com/userdanixdev)
+---
+
+
 
 {% enddocs %}
