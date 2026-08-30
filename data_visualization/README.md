@@ -52,3 +52,4 @@ Caso queira acessar para a página principal é só clicar aqui abaixo:
 Caso queira acessar as boas práticas, insights e perguntas de negócios aplicadas:
 - ➡️ [README.md - Power BI](/data_visualization/powerbi/README.md)
 - ➡️ [Relatório Power BI](https://app.powerbi.com/view?r=eyJrIjoiZmFiMWE4YWItNmM5Yi00ZDE3LWEzYWUtYzlmYmJlYjAwZGNiIiwidCI6ImVkNTJhZDViLTU0YzktNDNlZi04YmNhLThlOWY4Y2U0Zjc1ZiJ9)
+- ➡️ [GitHub Pages - Power BI](https://userdanixdev.github.io/adventureworks-analytics/)

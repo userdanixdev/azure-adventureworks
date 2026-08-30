@@ -166,7 +166,7 @@ Com isso, o projeto consolida conhecimentos em:
 - ➡️ [Acesse as Boas Práticas Aplicadas](/data_visualization/docs/boas_praticas.md)
 - ➡️ [Acesse aos insights realizados](/data_visualization/docs/insights.md)
 - ➡️ [Acesse as perguntas de negócios](/data_visualization/docs/perguntas_negocios.md)
-
+- ➡️ [GitHub Pages - Power BI](https://userdanixdev.github.io/adventureworks-analytics/)
 - ↩️ [Volte para Data-Visualization #2](/data_visualization/README.md)
 
 
