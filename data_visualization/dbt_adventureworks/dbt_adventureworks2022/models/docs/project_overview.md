@@ -145,8 +145,9 @@ O Power BI pode consumir as dimensões e fatos produzidos pelo dbt, permitindo a
 
 ---
 
-➡️ **[Acessar análises do Power BI]((https://app.powerbi.com/view?r=eyJrIjoiZmFiMWE4YWItNmM5Yi00ZDE3LWEzYWUtYzlmYmJlYjAwZGNiIiwidCI6ImVkNTJhZDViLTU0YzktNDNlZi04YmNhLThlOWY4Y2U0Zjc1ZiJ9))**
-➡️ **[Acesso ao relatório]((https://app.powerbi.com/view?r=eyJrIjoiZmFiMWE4YWItNmM5Yi00ZDE3LWEzYWUtYzlmYmJlYjAwZGNiIiwidCI6ImVkNTJhZDViLTU0YzktNDNlZi04YmNhLThlOWY4Y2U0Zjc1ZiJ9))**
+➡️ **[Acesso as análises do Power BI](https://userdanixdev.github.io/adventureworks-analytics/)**
+
+➡️ **[Acesso ao relatório](https://app.powerbi.com/view?r=eyJrIjoiZmFiMWE4YWItNmM5Yi00ZDE3LWEzYWUtYzlmYmJlYjAwZGNiIiwidCI6ImVkNTJhZDViLTU0YzktNDNlZi04YmNhLThlOWY4Y2U0Zjc1ZiJ9)**
 
 ---
 
